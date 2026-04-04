@@ -81,9 +81,6 @@ dependencies {
     implementation("com.clerk:clerk-android-api:0.1.0") {
         exclude(group = "com.clerk", module = "clerk-android-telemetry")
     }
-    implementation("com.clerk:clerk-android-ui:0.1.0") {
-        exclude(group = "com.clerk", module = "clerk-android-telemetry")
-    }
 
     // Google Sign-In (Still useful for Clerk's OAuth)
     implementation("com.google.android.gms:play-services-auth:20.7.0")
