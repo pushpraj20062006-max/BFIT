@@ -40,6 +40,15 @@ Access top-tier supplements with ease:
 
 ---
 
+## 🆕 What's New in v1.0
+- **UI Animations & Polish**: Smooth slide/fade activity transitions, BFIT brand color palette (purple/pink) with dark mode support, and refined layouts.
+- **Custom Branding**: New BFIT dumbbell+lightning launcher icon and Android 12+ SplashScreen initialization.
+- **Robust Testing**: 30+ comprehensive unit tests covering BMI calculation, supplements model, chat messages, and nutrition regex parsing.
+- **CI/CD Pipeline**: Automated GitHub Actions workflows for building and testing on every push.
+- **Enhanced Store Checkout**: Full checkout dialog with quantity selector, dynamic price breakdown, order confirmation, and purchase history.
+
+---
+
 ## 🛠️ Tech Stack & Architecture
 
 | Layer | Technology |
@@ -60,7 +69,7 @@ To simplify the "Getting Started" process, we've enabled **Clerk Authentication*
 
 1. **Clone the project**:
    ```bash
-   git clone https://github.com/pushpraj20062006-max/BFIT.git
+   git clone https://github.com/pushpraj-core/BFIT.git
    ```
 
 2. **Configure API Key (No JSON required)**:
