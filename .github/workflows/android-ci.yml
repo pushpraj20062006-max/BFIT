@@ -27,8 +27,7 @@ jobs:
 
       - name: Create local.properties
         run: |
-          echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
-          echo "apiKey=CI_DUMMY_KEY" >> local.properties
+          echo "apiKey=CI_DUMMY_KEY" > local.properties
           echo "gemini.apiKey=CI_DUMMY_KEY" >> local.properties
           echo "clerk.publishableKey=CI_DUMMY_KEY" >> local.properties
           echo "google.webClientId=CI_DUMMY_ID" >> local.properties
