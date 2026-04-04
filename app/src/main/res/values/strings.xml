@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">BFIT</string>
+    <string name="height_cm">Height (cm)</string>
+    <string name="height_ft">Height (ft)</string>
+    <string name="please_fill_all_fields">Please fill all fields</string>
+    <string name="scanned_food_calories">%s %s</string>
+    <string name="calories_consumed">Calories consumed: %1$d/%2$d kcal</string>
+    <string name="calories_and_protein_consumed">Calories: %1$d/%2$d kcal | Protein: %3$d/%4$d g</string>
+    <string name="app_logo_content_description">App Logo</string>
+    <string name="scan_food">Scan Food</string>
+    <string name="fitness_calorie_planner">Fitness &amp; Calorie Planner</string>
+    <string name="age">Age</string>
+    <string name="weight_kg">Weight (kg)</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="dietary_preference">Dietary Preference</string>
+    <string name="body_goal">Body Goal</string>
+    <string name="allergies">Allergies (comma-separated)</string>
+    <string name="lactose_intolerant">Lactose Intolerant</string>
+    <string name="generate_plan">Generate Plan</string>
+    <string name="todays_plan">Todays Plan</string>
+    <string name="view_plan">View Plan</string>
+    <string name="logout">Logout</string>
+    <string name="launch_chatbot">Launch Chatbot</string>
+    <string name="daily_summary">Daily Summary</string>
+    <string name="protein">Protein</string>
+    <string name="view_full_plan">View Full Plan</string>
+    <string name="store">Store</string>
+    <string name="recommended_supplements">Recommended Supplements</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="calories_consumed_format">%1$d / %2$d kcal</string>
+    <string name="calorie_progress_format">%1$d
+kcal</string>
+    <string name="protein_consumed_format">%1$d / %2$d g</string>
+</resources>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="underweight_veg_breakfast">
+        <item>Paneer Sandwich|Protein-rich breakfast|400|20</item>
+        <item>Milkshake with Nuts|High-fat smoothie|350|15</item>
+    </string-array>
+    <string-array name="underweight_veg_lunch">
+        <item>Rajma Chawal|Omega-3 rich meal|500|25</item>
+        <item>Roti with Ghee and Dal|Low-carb pasta alternative|450|20</item>
+    </string-array>
+    <string-array name="underweight_veg_dinner">
+        <item>Paneer Butter Masala with Naan|Hearty veg dinner|600|30</item>
+        <item>Veg Pizza|Low-carb pizza|550|25</item>
+    </string-array>
+
+    <string-array name="normal_weight_veg_breakfast">
+        <item>Poha|Classic veg breakfast|350|10</item>
+        <item>Dosa|Fiber-rich and veg-friendly|300|8</item>
+    </string-array>
+    <string-array name="normal_weight_veg_lunch">
+        <item>Dal Makhani with Roti|Nutrient-dense salad|450|20</item>
+        <item>Mix Veg Sabzi with Roti|Light and flavorful|400|15</item>
+    </string-array>
+    <string-array name="normal_weight_veg_dinner">
+        <item>Kadhai Paneer with Roti|Healthy and simple|500|25</item>
+        <item>Veg Biryani|Vegetarian veg option|450|20</item>
+    </string-array>
+
+    <string-array name="overweight_veg_breakfast">
+        <item>Oats|Low-carb pancakes|300|12</item>
+        <item>Greek Yogurt with Nuts|Protein and healthy fats|250|18</item>
+    </string-array>
+    <string-array name="overweight_veg_lunch">
+        <item>Salad|Easy and filling|400|10</item>
+        <item>Veg Soup with Vegetables|Warm and satisfying|350|8</item>
+    </string-array>
+    <string-array name="overweight_veg_dinner">
+        <item>Dal with Roti|Low-calorie stir-fry|450|20</item>
+        <item>Bottle Gourd Sabzi|Pasta-like texture|400|15</item>
+    </string-array>
+
+    <string-array name="obese_veg_breakfast">
+        <item>Fruits|High-fat coffee for satiety|250|5</item>
+        <item>Sprouts|Simple and quick|200|10</item>
+    </string-array>
+    <string-array name="obese_veg_lunch">
+        <item>Veg Meal Replacement Shake|Convenient and nutritious|300|20</item>
+        <item>Cucumber Sticks with Hummus|Healthy snack-like lunch|250|10</item>
+    </string-array>
+    <string-array name="obese_veg_dinner">
+        <item>Grilled Paneer with Steamed Vegetables|Lean and green|400|25</item>
+        <item>Veg Casserole with Ground Soya|Comfort food made healthy|350|20</item>
+    </string-array>
+    <string-array name="underweight_non_veg_breakfast">
+        <item>Avocado and Spinach Omelette|Protein-rich breakfast|400|25</item>
+        <item>Keto Smoothie with MCT Oil|High-fat smoothie|350|10</item>
+    </string-array>
+    <string-array name="underweight_non_veg_lunch">
+        <item>Grilled Salmon with Asparagus|Omega-3 rich meal|500|40</item>
+        <item>Zucchini Noodles with Pesto and Chicken|Low-carb pasta alternative|450|35</item>
+    </string-array>
+    <string-array name="underweight_non_veg_dinner">
+        <item>Steak with Cauliflower Mash|Hearty keto dinner|600|50</item>
+        <item>Keto-friendly Pizza|Low-carb pizza|550|30</item>
+    </string-array>
+
+    <string-array name="normal_weight_non_veg_breakfast">
+        <item>Scrambled Eggs with Bacon|Classic keto breakfast|350|20</item>
+        <item>Chia Seed Pudding|Fiber-rich and keto-friendly|300|10</item>
+    </string-array>
+    <string-array name="normal_weight_non_veg_lunch">
+        <item>Cobb Salad with Grilled Chicken|Nutrient-dense salad|450|35</item>
+        <item>Lettuce Wraps with Minced Pork|Light and flavorful|400|30</item>
+    </string-array>
+    <string-array name="normal_weight_non_veg_dinner">
+        <item>Baked Cod with Broccoli|Healthy and simple|500|40</item>
+        <item>Eggplant Parmesan|Vegetarian keto option|450|20</item>
+    </string-array>
+
+    <string-array name="overweight_non_veg_breakfast">
+        <item>Keto Pancakes with Berries|Low-carb pancakes|300|15</item>
+        <item>Greek Yogurt with Nuts|Protein and healthy fats|250|18</item>
+    </string-array>
+    <string-array name="overweight_non_veg_lunch">
+        <item>Tuna Salad Stuffed Avocados|Easy and filling|400|30</item>
+        <item>Keto Soup with Vegetables|Warm and satisfying|350|10</item>
+    </string-array>
+    <string-array name="overweight_non_veg_dinner">
+        <item>Chicken Stir-fry with Shirataki Noodles|Low-calorie stir-fry|450|35</item>
+        <item>Spaghetti Squash with Meat Sauce|Pasta-like texture|400|30</item>
+    </string-array>
+
+    <string-array name="obese_non_veg_breakfast">
+        <item>Bulletproof Coffee|High-fat coffee for satiety|250|2</item>
+        <item>Hard-boiled Eggs|Simple and quick|200|12</item>
+    </string-array>
+    <string-array name="obese_non_veg_lunch">
+        <item>Keto Meal Replacement Shake|Convenient and nutritious|300|20</item>
+        <item>Celery Sticks with Almond Butter|Healthy snack-like lunch|250|8</item>
+    </string-array>
+    <string-array name="obese_non_veg_dinner">
+        <item>Grilled Chicken Breast with Steamed Vegetables|Lean and green|400|40</item>
+        <item>Keto Casserole with Ground Turkey|Comfort food made healthy|350|30</item>
+    </string-array>
+
+    <!-- Keto -->
+    <string-array name="underweight_keto_breakfast">
+        <item>Keto Pancakes|Low-carb breakfast|450|20</item>
+        <item>Sausage and Eggs|High-protein start|500|30</item>
+    </string-array>
+    <string-array name="underweight_keto_lunch">
+        <item>Bacon and Avocado Salad|Fat-rich lunch|550|25</item>
+        <item>Cheeseburger Casserole|Hearty and filling|600|40</item>
+    </string-array>
+    <string-array name="underweight_keto_dinner">
+        <item>Ribeye Steak with Asparagus|Classic keto dinner|700|60</item>
+        <item>Fathead Pizza|Low-carb pizza night|650|45</item>
+    </string-array>
+
+    <string-array name="normal_weight_keto_breakfast">
+        <item>Avocado Toast on Keto Bread|Healthy fats|400|15</item>
+        <item>Mushroom Omelette|Veggie-filled breakfast|350|20</item>
+    </string-array>
+    <string-array name="normal_weight_keto_lunch">
+        <item>Grilled Chicken Salad|Lean protein lunch|450|40</item>
+        <item>Zucchini Lasagna|Low-carb comfort food|500|35</item>
+    </string-array>
+    <string-array name="normal_weight_keto_dinner">
+        <item>Salmon with Lemon-Dill Sauce|Omega-3 rich dinner|550|45</item>
+        <item>Pork Chops with Green Beans|Simple and satisfying|500|40</item>
+    </string-array>
+
+    <string-array name="overweight_keto_breakfast">
+        <item>Scrambled Eggs|Simple and quick|300|20</item>
+        <item>Chia Seed Pudding|Fiber-rich start|250|10</item>
+    </string-array>
+    <string-array name="overweight_keto_lunch">
+        <item>Tuna Salad Lettuce Wraps|Light and refreshing|350|30</item>
+        <item>Broccoli Cheddar Soup|Creamy and comforting|400|15</item>
+    </string-array>
+    <string-array name="overweight_keto_dinner">
+        <item>Cauliflower Shepherds Pie|Keto comfort food|450|30</item>
+        <item>Chicken and Veggie Skewers|Grilled and delicious|400|35</item>
+    </string-array>
+
+    <string-array name="obese_keto_breakfast">
+        <item>Bulletproof Coffee|Fat-burning coffee|250|2</item>
+        <item>Hard Boiled Eggs|Easy protein source|200|12</item>
+    </string-array>
+    <string-array name="obese_keto_lunch">
+        <item>Cobb Salad|Packed with nutrients|300|25</item>
+        <item>Keto-friendly Soup|Warm and filling|250|10</item>
+    </string-array>
+    <string-array name="obese_keto_dinner">
+        <item>Baked Cod with Veggies|Lean protein dinner|350|35</item>
+        <item>Stuffed Bell Peppers|Flavorful and low-carb|300|20</item>
+    </string-array>
+
+    <!-- Vegan -->
+    <string-array name="underweight_vegan_breakfast">
+        <item>Tofu Scramble with Veggies|High-protein vegan start|400|25</item>
+        <item>Vegan Smoothie with Protein Powder|Calorie-dense shake|450|30</item>
+    </string-array>
+    <string-array name="underweight_vegan_lunch">
+        <item>Lentil Shepherds Pie|Hearty and comforting|550|30</item>
+        <item>Vegan Burrito Bowl|Packed with flavor|600|35</item>
+    </string-array>
+    <string-array name="underweight_vegan_dinner">
+        <item>Vegan Mac and Cheese|Creamy and delicious|650|30</item>
+        <item>Seitan Steak with Mashed Potatoes|High-protein vegan dinner|700|40</item>
+    </string-array>
+
+    <string-array name="normal_weight_vegan_breakfast">
+        <item>Avocado Toast with Everything Bagel Seasoning|Healthy and trendy|350|12</item>
+        <item>Oatmeal with Berries and Nuts|Classic and nutritious|400|15</item>
+    </string-array>
+    <string-array name="normal_weight_vegan_lunch">
+        <item>Quinoa Salad with Black Beans and Corn|Colorful and vibrant|450|20</item>
+        <item>Chickpea Salad Sandwich|Vegan twist on a classic|500|22</item>
+    </string-array>
+    <string-array name="normal_weight_vegan_dinner">
+        <item>Vegan Curry with Tofu and Vegetables|Flavorful and aromatic|550|25</item>
+        <item>Black Bean Burgers on Whole Wheat Buns|Hearty and satisfying|500|25</item>
+    </string-array>
+
+    <string-array name="overweight_vegan_breakfast">
+        <item>Green Smoothie|Nutrient-dense and low-cal|250|10</item>
+        <item>Fruit Salad|Simple and refreshing|200|5</item>
+    </string-array>
+    <string-array name="overweight_vegan_lunch">
+        <item>Large Green Salad with a Light Vinaigrette|Filling and healthy|300|10</item>
+        <item>Vegan Lentil Soup|Warm and comforting|350|15</item>
+    </string-array>
+    <string-array name="overweight_vegan_dinner">
+        <item>Roasted Vegetables with Hummus|Simple and flavorful|400|12</item>
+        <item>Zucchini Noodles with Marinara Sauce|Low-carb and delicious|350|10</item>
+    </string-array>
+
+    <string-array name="obese_vegan_breakfast">
+        <item>Grapefruit|Low in calories|100|2</item>
+        <item>Celery Juice|Hydrating and cleansing|50|1</item>
+    </string-array>
+    <string-array name="obese_vegan_lunch">
+        <item>Cucumber and Tomato Salad|Light and refreshing|150|5</item>
+        <item>Miso Soup|Simple and savory|100|5</item>
+    </string-array>
+    <string-array name="obese_vegan_dinner">
+        <item>Steamed Vegetables|Plain and simple|200|5</item>
+        <item>A small bowl of berries|For a touch of sweetness|150|2</item>
+    </string-array>
+
+    <!-- Paleo -->
+    <string-array name="underweight_paleo_breakfast">
+        <item>Eggs and Sweet Potato Hash|Hearty paleo breakfast|450|25</item>
+        <item>Paleo Smoothie|Nutrient-dense and delicious|500|20</item>
+    </string-array>
+    <string-array name="underweight_paleo_lunch">
+        <item>Large Salad with Grilled Chicken and Avocado|Packed with goodness|600|40</item>
+        <item>Shepherds Pie with Cauliflower Topping|Comfort food, paleo style|650|45</item>
+    </string-array>
+    <string-array name="underweight_paleo_dinner">
+        <item>Bunless Burger with all the fixings|A satisfying meal|700|50</item>
+        <item>Salmon with Roasted Brussels Sprouts|Healthy and flavorful|750|50</item>
+    </string-array>
+
+    <string-array name="normal_weight_paleo_breakfast">
+        <item>Scrambled Eggs with Spinach|A simple, classic breakfast|400|25</item>
+        <item>Fruit and Nut Bowl|A light and refreshing start|350|10</item>
+    </string-array>
+    <string-array name="normal_weight_paleo_lunch">
+        <item>Leftover Salmon and Brussels Sprouts|Easy and delicious|500|40</item>
+        <item>Chicken and Vegetable Skewers|A fun and healthy lunch|450|35</item>
+    </string-array>
+    <string-array name="normal_weight_paleo_dinner">
+        <item>Tuna-stuffed Avocados|A quick and easy dinner|550|35</item>
+        <item>Pork Chops with Apple and Cinnamon|A flavorful fall dish|500|40</item>
+    </string-array>
+
+    <string-array name="overweight_paleo_breakfast">
+        <item>Hard-boiled Eggs|A simple, protein-packed breakfast|200|12</item>
+        <item>Half an Avocado|A great source of healthy fats|160|2</item>
+    </string-array>
+    <string-array name="overweight_paleo_lunch">
+        <item>A large salad with some grilled shrimp|A light and refreshing lunch|350|25</item>
+        <item>A bowl of vegetable soup|A warm and comforting meal|300|8</item>
+    </string-array>
+    <string-array name="overweight_paleo_dinner">
+        <item>A small piece of grilled chicken with some steamed broccoli|A lean and green dinner|400|35</item>
+        <item>A frittata with lots of vegetables|A great way to use up leftovers|350|20</item>
+    </string-array>
+
+    <string-array name="obese_paleo_breakfast">
+        <item>A handful of berries|A light and refreshing start|100|2</item>
+        <item>A cup of bone broth|A warm and comforting drink|50|5</item>
+    </string-array>
+    <string-array name="obese_paleo_lunch">
+        <item>A simple salad with a light vinaigrette|A very light lunch|150|5</item>
+        <item>Some celery sticks with a little bit of almond butter|A crunchy and satisfying snack|200|7</item>
+    </string-array>
+    <string-array name="obese_paleo_dinner">
+        <item>A small piece of fish with some steamed asparagus|A very lean and green dinner|250|25</item>
+        <item>A bowl of steamed vegetables|A very simple and healthy meal|200|5</item>
+    </string-array>
+
+    <!-- High-Protein -->
+    <string-array name="underweight_high_protein_breakfast">
+        <item>Greek Yogurt with Nuts and Seeds|Protein-packed start|450|30</item>
+        <item>Protein Shake with Banana and Peanut Butter|Calorie and protein-dense|500|40</item>
+    </string-array>
+    <string-array name="underweight_high_protein_lunch">
+        <item>Chicken Breast with Quinoa and Broccoli|A balanced and protein-rich meal|600|50</item>
+        <item>Tuna Salad with Greek Yogurt|A lighter, high-protein lunch|550|45</item>
+    </string-array>
+    <string-array name="underweight_high_protein_dinner">
+        <item>Steak with a side of sweet potato fries|A hearty and satisfying meal|750|60</item>
+        <item>Lentil Soup with a side of whole wheat bread|A vegetarian high-protein option|650|35</item>
+    </string-array>
+
+    <string-array name="normal_weight_high_protein_breakfast">
+        <item>Cottage Cheese with Berries|A light and protein-rich breakfast|350|30</item>
+        <item>Egg White Omelette with Vegetables|A classic high-protein breakfast|400|30</item>
+    </string-array>
+    <string-array name="normal_weight_high_protein_lunch">
+        <item>Grilled Fish with a side of roasted vegetables|A healthy and flavorful lunch|500|45</item>
+        <item>A salad with grilled tofu and a light vinaigrette|A vegetarian high-protein option|450|30</item>
+    </string-array>
+    <string-array name="normal_weight_high_protein_dinner">
+        <item>Turkey Meatballs with zucchini noodles|A low-carb, high-protein dinner|550|40</item>
+        <item>A black bean burger on a whole wheat bun|A satisfying vegetarian option|500|30</item>
+    </string-array>
+
+    <string-array name="overweight_high_protein_breakfast">
+        <item>A hard-boiled egg|A simple and easy breakfast|80|6</item>
+        <item>A small container of Greek yogurt|A quick and protein-rich start|100|15</item>
+    </string-array>
+    <string-array name="overweight_high_protein_lunch">
+        <item>A can of tuna in water|A very lean and high-protein lunch|120|26</item>
+        <item>A grilled chicken breast|A simple and versatile protein source|165|31</item>
+    </string-array>
+    <string-array name="overweight_high_protein_dinner">
+        <item>A piece of baked fish with a side of steamed vegetables|A light and healthy dinner|300|30</item>
+        <item>A small bowl of lentil soup|A warm and satisfying meal|250|15</item>
+    </string-array>
+
+    <string-array name="obese_high_protein_breakfast">
+        <item>A protein shake with water|A very low-calorie, high-protein start|150|30</item>
+        <item>A few slices of turkey breast|A very simple and lean breakfast|100|20</item>
+    </string-array>
+    <string-array name="obese_high_protein_lunch">
+        <item>A large salad with a small amount of grilled chicken|A very low-calorie, high-protein lunch|250|30</item>
+        <item>A bowl of clear vegetable soup with some tofu|A very light and healthy meal|200|15</item>
+    </string-array>
+    <string-array name="obese_high_protein_dinner">
+        <item>A small piece of steamed fish with a side of green beans|A very lean and green dinner|200|25</item>
+        <item>A large plate of steamed vegetables|A very simple and healthy meal|150|5</item>
+    </string-array>
+</resources>

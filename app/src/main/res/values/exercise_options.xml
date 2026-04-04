@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="bulk_exercises">
+        <item>Squats (3 sets of 8-12 reps)</item>
+        <item>Deadlifts (3 sets of 5-8 reps)</item>
+        <item>Bench Press (3 sets of 8-12 reps)</item>
+        <item>Overhead Press (3 sets of 8-12 reps)</item>
+        <item>Bent-over Rows (3 sets of 8-12 reps)</item>
+        <item>Pull-ups (3 sets to failure)</item>
+        <item>Bicep Curls (3 sets of 10-15 reps)</item>
+    </string-array>
+
+    <string-array name="lean_exercises">
+        <item>Running/Jogging (30 minutes, 3-4 times a week)</item>
+        <item>HIIT (20 minutes, 2-3 times a week)</item>
+        <item>Jump Rope (15 minutes)</item>
+        <item>Bodyweight Circuit (Push-ups, Squats, Lunges, Planks)</item>
+        <item>Cycling (30-45 minutes)</item>
+        <item>Kettlebell Swings (3 sets of 15-20 reps)</item>
+        <item>Burpees (3 sets of 10-15 reps)</item>
+    </string-array>
+
+    <string-array name="maintain_exercises">
+        <item>Full Body Workout (2-3 times a week)</item>
+        <item>Yoga or Pilates (2 times a week)</item>
+        <item>Brisking Walking (30 minutes daily)</item>
+        <item>Swimming (30 minutes, 2 times a week)</item>
+        <item>Dumbbell Lunges (3 sets of 10-12 reps per leg)</item>
+        <item>Plank (3 sets, hold for 30-60 seconds)</item>
+        <item>Resistance Band Exercises</item>
+    </string-array>
+</resources>
