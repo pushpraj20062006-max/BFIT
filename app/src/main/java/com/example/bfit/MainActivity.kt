@@ -167,6 +167,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("plan", currentPlan)
         intent.putExtra("selectedDate", date)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -181,6 +182,7 @@ class MainActivity : AppCompatActivity() {
         // Check if user is authenticated
         if (auth.currentUser == null) {
             startActivity(Intent(this, LoginActivity::class.java))
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             finish()
             return
         }
@@ -280,6 +282,7 @@ class MainActivity : AppCompatActivity() {
         scanBtn.setOnClickListener {
             val intent = Intent(this, ScannerActivity::class.java)
             scannerLauncher.launch(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         val viewPlanBtn = dashboardView.findViewById<Button>(R.id.viewPlanBtn)
@@ -287,17 +290,20 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, PlannerActivity::class.java)
             intent.putExtra("plan", currentPlan)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         val storeBtn = dashboardView.findViewById<Button>(R.id.storeBtn)
         storeBtn.setOnClickListener {
             val intent = Intent(this, StoreActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         fabChat.setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         // Logout button - Firebase sign out
@@ -310,6 +316,7 @@ class MainActivity : AppCompatActivity() {
                     auth.signOut()
                     clearUserData()
                     startActivity(Intent(this, LoginActivity::class.java))
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                     finish()
                 }
                 .setNegativeButton("Cancel", null)

@@ -145,6 +145,19 @@
         app:icon="@drawable/ic_baseline_person_24"
         app:iconGravity="textStart" />
 
+    <!-- Demo Mode Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/demoModeButton"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Try Demo Mode"
+        android:textAllCaps="false"
+        app:cornerRadius="16dp"
+        app:icon="@drawable/ic_baseline_fitness_center_24"
+        app:iconGravity="textStart" />
+
     <ProgressBar
         android:id="@+id/loginProgressBar"
         android:layout_width="wrap_content"

@@ -1,7 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.BFIT" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Base.Theme.BFIT" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- BFIT Brand Colors (Dark Mode) -->
+        <item name="colorPrimary">@color/bfit_primary</item>
+        <item name="colorPrimaryContainer">#381E72</item>
+        <item name="colorSecondary">@color/bfit_secondary</item>
+        <item name="colorSecondaryContainer">#633B48</item>
+
+        <!-- Smooth Activity Transition Animations -->
+        <item name="android:windowAnimationStyle">@style/BFITWindowAnimations</item>
     </style>
 </resources>

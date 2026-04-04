@@ -112,6 +112,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun navigateToMain() {
         startActivity(Intent(this, MainActivity::class.java))
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         finish()
     }
 

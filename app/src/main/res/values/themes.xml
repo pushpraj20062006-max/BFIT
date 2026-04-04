@@ -1,9 +1,23 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.BFIT" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- BFIT Brand Colors -->
+        <item name="colorPrimary">@color/bfit_primary</item>
+        <item name="colorPrimaryContainer">@color/bfit_primary_container</item>
+        <item name="colorSecondary">@color/bfit_secondary</item>
+        <item name="colorSecondaryContainer">@color/bfit_secondary_container</item>
+
+        <!-- Smooth Activity Transition Animations -->
+        <item name="android:windowAnimationStyle">@style/BFITWindowAnimations</item>
     </style>
 
     <style name="Theme.BFIT" parent="Base.Theme.BFIT" />
+
+    <!-- Activity transition animations -->
+    <style name="BFITWindowAnimations" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
 </resources>
