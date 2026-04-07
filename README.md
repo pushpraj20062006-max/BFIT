@@ -155,6 +155,48 @@ npm install
 npm run dev
 ```
 
+## CI/CD
+
+This repository includes GitHub Actions workflows for quality enforcement and release automation:
+
+- `android-ci.yml`:
+   - Runs on pushes and pull requests to `master`/`main`
+   - Executes `lintDebug`, `testDebugUnitTest`, and `assembleDebug`
+   - Uploads debug APK and reports as build artifacts
+   - Fails the pipeline on quality/build errors
+
+- `android-release.yml`:
+   - Runs on version tags such as `v1.0.0` or manual dispatch
+   - Builds release APK
+   - Uses signing secrets if provided
+   - Uploads the APK to GitHub Release and workflow artifacts
+
+### Recommended Branch Protection
+
+Enable branch protection for `master` and require CI status checks before merge.
+
+## GitHub Release Setup
+
+For signed release builds in GitHub Actions, add these repository secrets:
+
+- `API_KEY`
+- `GEMINI_API_KEY`
+- `GOOGLE_WEB_CLIENT_ID`
+- `GOOGLE_SERVICES_JSON` (base64-encoded `google-services.json`)
+- `ANDROID_KEYSTORE_BASE64` (base64-encoded keystore)
+- `ANDROID_KEYSTORE_PASSWORD`
+- `ANDROID_KEY_ALIAS`
+- `ANDROID_KEY_PASSWORD`
+
+To publish a release:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+GitHub Actions will generate and attach the APK to the release.
+
 ## Data and Architecture Notes
 
 - Room is used as local persistent storage for performance and offline continuity.

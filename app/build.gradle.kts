@@ -11,6 +11,11 @@ android {
     namespace = "com.example.bfit"
     compileSdk = 36
 
+    val keystorePath = System.getenv("ANDROID_KEYSTORE_PATH")
+    val keystorePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD")
+    val keyAlias = System.getenv("ANDROID_KEY_ALIAS")
+    val keyPassword = System.getenv("ANDROID_KEY_PASSWORD")
+
     defaultConfig {
         applicationId = "com.example.bfit"
         minSdk = 24
@@ -36,15 +41,35 @@ android {
         buildConfigField("String", "GOOGLE_WEB_CLIENT_ID", "\"$webClientId\"")
     }
 
+    signingConfigs {
+        if (!keystorePath.isNullOrBlank() && !keystorePassword.isNullOrBlank() && !keyAlias.isNullOrBlank() && !keyPassword.isNullOrBlank()) {
+            create("release") {
+                storeFile = file(keystorePath)
+                storePassword = keystorePassword
+                this.keyAlias = keyAlias
+                this.keyPassword = keyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
             @Suppress("DEPRECATION")
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            if (signingConfigs.findByName("release") != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+    }
+
+    lint {
+        abortOnError = true
+        checkReleaseBuilds = true
     }
 
     compileOptions {

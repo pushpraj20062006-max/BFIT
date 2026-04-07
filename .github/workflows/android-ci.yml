@@ -1,4 +1,4 @@
-name: BFIT Android CI
+name: Android CI
 
 on:
   push:
@@ -6,13 +6,20 @@ on:
   pull_request:
     branches: [ master, main ]
 
+concurrency:
+  group: android-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
-  build:
-    name: Build & Test
+  verify:
+    name: Lint, Test, Build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -25,11 +32,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Create local.properties
+      - name: Create local.properties for CI
         run: |
           echo "apiKey=CI_DUMMY_KEY" > local.properties
           echo "gemini.apiKey=CI_DUMMY_KEY" >> local.properties
-          echo "clerk.publishableKey=CI_DUMMY_KEY" >> local.properties
           echo "google.webClientId=CI_DUMMY_ID" >> local.properties
 
       - name: Create dummy google-services.json
@@ -51,13 +57,14 @@ jobs:
             "configuration_version": "1"
           }' > app/google-services.json
 
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace
-        continue-on-error: true
+      - name: Lint
+        run: ./gradlew lintDebug --stacktrace
 
-      - name: Run Unit Tests
+      - name: Unit tests
         run: ./gradlew testDebugUnitTest --stacktrace
-        continue-on-error: true
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Upload Debug APK
         if: always()
@@ -72,10 +79,10 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: app/build/reports/tests/
+          name: test-and-lint-reports
+          path: |
+            app/build/reports/tests/
+            app/build/reports/lint-results-debug.html
+            app/build/reports/lint-results-debug.xml
           if-no-files-found: ignore
           retention-days: 7
-
-      - name: Build Status
-        run: echo "CI pipeline completed. Check artifacts for APK and test results."
