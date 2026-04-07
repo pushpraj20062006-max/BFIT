@@ -28,4 +28,13 @@ interface PlanDao {
 
     @Query("SELECT * FROM extra_meal_items WHERE date = :date")
     suspend fun getExtraMealItems(date: Long): List<ExtraMealItem>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertWeightLogEntry(weightLogEntry: WeightLogEntry)
+
+    @Query("SELECT * FROM weight_log WHERE date BETWEEN :startDate AND :endDate ORDER BY date ASC")
+    suspend fun getWeightLogEntriesBetween(startDate: Long, endDate: Long): List<WeightLogEntry>
+
+    @Query("SELECT * FROM weight_log ORDER BY date DESC LIMIT 1")
+    suspend fun getLatestWeightLogEntry(): WeightLogEntry?
 }

@@ -109,6 +109,24 @@ class PlanRepository(context: Context) {
         }
     }
 
+    fun addWeightLogEntry(date: Long, weightKg: Float) {
+        runBlocking(Dispatchers.IO) {
+            planDao.insertWeightLogEntry(WeightLogEntry(date, weightKg))
+        }
+    }
+
+    fun getWeightLogEntriesBetween(startDate: Long, endDate: Long): List<WeightLogEntry> {
+        return runBlocking(Dispatchers.IO) {
+            planDao.getWeightLogEntriesBetween(startDate, endDate)
+        }
+    }
+
+    fun getLatestWeightLogEntry(): WeightLogEntry? {
+        return runBlocking(Dispatchers.IO) {
+            planDao.getLatestWeightLogEntry()
+        }
+    }
+
     fun getWeeklyProgressReport(endDate: Long = startOfDay(System.currentTimeMillis())): WeeklyProgressReport {
         val calendar = Calendar.getInstance().apply { timeInMillis = endDate }
         calendar.add(Calendar.DAY_OF_YEAR, -6)
