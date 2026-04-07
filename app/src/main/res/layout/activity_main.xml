@@ -51,8 +51,7 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:gravity="center_horizontal"
-                    tools:text="5-day
-streak" />
+                    tools:text="🔥 5 day streak" />
 
             </RelativeLayout>
 
@@ -244,7 +243,7 @@ streak" />
                     app:cornerRadius="16dp"/>
             </LinearLayout>
 
-            <!-- New Dashboard View -->
+            <!-- Dashboard View -->
             <LinearLayout
                 android:id="@+id/dashboardView"
                 android:layout_width="match_parent"
@@ -254,15 +253,97 @@ streak" />
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <TextView
-                    android:id="@+id/welcomeText"
+                <!-- Welcome + Action Row -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceTitleLarge"
-                    android:textColor="?attr/colorPrimary"
-                    android:layout_marginBottom="16dp"
-                    tools:text="Welcome, Pushp!" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
 
+                    <TextView
+                        android:id="@+id/welcomeText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textColor="?attr/colorPrimary"
+                        tools:text="Welcome, Pushp!" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/profileBtn"
+                        style="@style/Widget.Material3.Button.IconButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/profile"
+                        app:icon="@drawable/ic_baseline_person_24" />
+
+                </LinearLayout>
+
+                <!-- BMI Result Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/bmiCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="?attr/colorPrimary"
+                    app:strokeWidth="1dp"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_baseline_monitor_weight_24"
+                            android:layout_marginEnd="12dp"
+                            app:tint="?attr/colorPrimary"
+                            android:contentDescription="BMI" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/bmiValueText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?attr/textAppearanceTitleMedium"
+                                android:textStyle="bold"
+                                tools:text="BMI: 22.5" />
+
+                            <TextView
+                                android:id="@+id/bmiCategoryText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textColor="?attr/colorPrimary"
+                                tools:text="Normal Weight" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/bmiGoalText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?attr/textAppearanceBodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            tools:text="Goal: Lean" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Daily Summary Card -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -301,6 +382,7 @@ streak" />
                                     app:indicatorSize="100dp"
                                     app:trackThickness="8dp"
                                     app:trackCornerRadius="4dp"
+                                    app:indicatorColor="?attr/colorPrimary"
                                     tools:progress="60" />
 
                                 <TextView
@@ -310,8 +392,7 @@ streak" />
                                     android:layout_centerInParent="true"
                                     android:gravity="center"
                                     android:textAppearance="?attr/textAppearanceTitleSmall"
-                                    tools:text="1200
-kcal" />
+                                    tools:text="1200\nkcal" />
                             </RelativeLayout>
 
                             <LinearLayout
@@ -339,6 +420,8 @@ kcal" />
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
+                                    app:indicatorColor="@color/bfit_secondary"
+                                    app:trackCornerRadius="4dp"
                                     tools:progress="75" />
 
                                 <TextView
@@ -353,6 +436,7 @@ kcal" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Today's Plan Card -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -377,47 +461,72 @@ kcal" />
                             android:id="@+id/dailyPlanRecyclerView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             tools:listitem="@layout/list_item_plan"
                             tools:itemCount="3"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <LinearLayout
+                <!-- Action Buttons — wrapped in GridLayout to prevent overflow -->
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="end">
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    android:layout_marginBottom="72dp">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/logoutBtn"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
+                    <GridLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/logout"
-                        android:layout_marginEnd="4dp"/>
+                        android:columnCount="2"
+                        android:padding="8dp"
+                        android:useDefaultMargins="true">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/profileBtn"
-                        style="@style/Widget.Material3.Button.TonalButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Profile"
-                        android:layout_marginEnd="4dp"/>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/viewPlanBtn"
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:text="@string/view_full_plan"
+                            app:icon="@drawable/ic_baseline_restaurant_24"
+                            app:iconGravity="textStart"
+                            app:cornerRadius="12dp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/storeBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/store"
-                        android:layout_marginEnd="4dp"/>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/storeBtn"
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:text="@string/store"
+                            app:icon="@drawable/ic_baseline_fitness_center_24"
+                            app:iconGravity="textStart"
+                            app:cornerRadius="12dp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/viewPlanBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/view_full_plan" />
-                </LinearLayout>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/logoutBtn"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:text="@string/logout"
+                            app:cornerRadius="12dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/scanDashBtn"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:text="@string/scan_food"
+                            app:icon="@drawable/ic_baseline_qr_code_scanner_24"
+                            app:iconGravity="textStart"
+                            app:cornerRadius="12dp" />
+
+                    </GridLayout>
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
 

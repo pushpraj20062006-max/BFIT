@@ -1,5 +1,7 @@
 package com.example.bfit
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +34,18 @@ class StoreActivity : AppCompatActivity() {
         setContentView(R.layout.activity_store)
 
         firestoreRepository = FirestoreRepository()
+
+        // Back button
+        findViewById<Button>(R.id.backButton).setOnClickListener {
+            finish()
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        }
+
+        // Purchase history button
+        findViewById<Button>(R.id.purchaseHistoryBtn).setOnClickListener {
+            showPurchaseHistory()
+        }
+
         val supplementsRecyclerView = findViewById<RecyclerView>(R.id.supplementsRecyclerView)
 
         // Try loading from Firestore first, fall back to defaults
@@ -51,123 +65,56 @@ class StoreActivity : AppCompatActivity() {
                 getDefaultSupplements()
             }
             supplementsRecyclerView.adapter = SupplementsAdapter(supplements) { supplement ->
-                showCheckoutDialog(supplement)
+                if (supplement.url.isNotEmpty()) {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(supplement.url))
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this@StoreActivity, "Product link coming soon!", Toast.LENGTH_SHORT).show()
+                }
             }
-        }
-
-        // Purchase history button
-        findViewById<MaterialButton>(R.id.purchaseHistoryBtn)?.setOnClickListener {
-            showPurchaseHistory()
         }
     }
 
-    private fun showCheckoutDialog(supplement: Supplement) {
-        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_checkout, null)
-
-        val productName = dialogView.findViewById<TextView>(R.id.checkoutProductName)
-        val productDesc = dialogView.findViewById<TextView>(R.id.checkoutProductDesc)
-        val quantityText = dialogView.findViewById<TextView>(R.id.quantityText)
-        val btnMinus = dialogView.findViewById<MaterialButton>(R.id.btnMinus)
-        val btnPlus = dialogView.findViewById<MaterialButton>(R.id.btnPlus)
-        val subtotalText = dialogView.findViewById<TextView>(R.id.subtotalText)
-        val totalText = dialogView.findViewById<TextView>(R.id.totalText)
-        val placeOrderBtn = dialogView.findViewById<MaterialButton>(R.id.placeOrderBtn)
-
-        productName.text = supplement.name
-        productDesc.text = supplement.description
-
-        var quantity = 1
-
-        fun updatePrices() {
-            val subtotal = supplement.price * quantity
-            subtotalText.text = "$${String.format("%.2f", subtotal)}"
-            totalText.text = "$${String.format("%.2f", subtotal)}"
-        }
-
-        updatePrices()
-
-        btnMinus.setOnClickListener {
-            if (quantity > 1) {
-                quantity--
-                quantityText.text = quantity.toString()
-                updatePrices()
-            }
-        }
-
-        btnPlus.setOnClickListener {
-            if (quantity < 10) {
-                quantity++
-                quantityText.text = quantity.toString()
-                updatePrices()
-            }
-        }
-
-        val dialog = AlertDialog.Builder(this)
-            .setView(dialogView)
-            .create()
-
-        placeOrderBtn.setOnClickListener {
-            val totalPrice = supplement.price * quantity
-            lifecycleScope.launch {
-                firestoreRepository.recordPurchase(
-                    supplementName = supplement.name,
-                    supplementId = supplement.id,
-                    price = totalPrice
-                )
-                dialog.dismiss()
-                showOrderConfirmation(supplement.name, quantity, totalPrice)
-            }
-        }
-
-        dialog.show()
-    }
-
-    private fun showOrderConfirmation(name: String, quantity: Int, total: Double) {
-        AlertDialog.Builder(this)
-            .setTitle("🎉 Order Placed!")
-            .setMessage(
-                "Your order has been confirmed!\n\n" +
-                "📦 Item: $name\n" +
-                "📊 Quantity: $quantity\n" +
-                "💰 Total: $${String.format("%.2f", total)}\n\n" +
-                "You'll receive your supplements soon. Keep grinding! 💪"
-            )
-            .setPositiveButton("Awesome!") { _, _ ->
-                Toast.makeText(this, "✅ Order $name confirmed!", Toast.LENGTH_SHORT).show()
-            }
-            .show()
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
     private fun showPurchaseHistory() {
         lifecycleScope.launch {
-            val purchases = firestoreRepository.getPurchaseHistory()
-            if (purchases.isEmpty()) {
-                Toast.makeText(this@StoreActivity, "No purchase history yet", Toast.LENGTH_SHORT).show()
-                return@launch
+            try {
+                val purchases = firestoreRepository.getPurchaseHistory()
+                if (purchases.isEmpty()) {
+                    Toast.makeText(this@StoreActivity, getString(R.string.no_purchase_history), Toast.LENGTH_SHORT).show()
+                    return@launch
+                }
+
+                val items = purchases.map { purchase ->
+                    val name = purchase["supplementName"] as? String ?: "Unknown"
+                    val price = (purchase["price"] as? Number)?.toDouble() ?: 0.0
+                    val status = purchase["status"] as? String ?: "unknown"
+                    "$name — $${"%.2f".format(price)} ($status)"
+                }.toTypedArray()
+
+                AlertDialog.Builder(this@StoreActivity)
+                    .setTitle(getString(R.string.purchase_history))
+                    .setItems(items, null)
+                    .setPositiveButton("Close", null)
+                    .show()
+            } catch (e: Exception) {
+                Toast.makeText(this@StoreActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
-
-            val historyItems = purchases.map { purchase ->
-                val name = purchase["supplementName"] as? String ?: "Unknown"
-                val price = (purchase["price"] as? Number)?.toDouble() ?: 0.0
-                val status = purchase["status"] as? String ?: "pending"
-                "🛒 $name — $${String.format("%.2f", price)} ($status)"
-            }.toTypedArray()
-
-            AlertDialog.Builder(this@StoreActivity)
-                .setTitle("📜 Purchase History")
-                .setItems(historyItems, null)
-                .setPositiveButton("Close", null)
-                .show()
         }
     }
 
     private fun getDefaultSupplements(): List<Supplement> {
+        val amazonUrl = "https://www.amazon.com/s?k=" // Global Amazon search redirect
         return listOf(
-            Supplement("whey_protein", "Whey Protein", "A high-quality protein for muscle growth and repair.", 29.99),
-            Supplement("creatine", "Creatine", "Improves strength, power, and muscle mass.", 19.99),
-            Supplement("bcaas", "BCAAs", "Reduces muscle soreness and exercise fatigue.", 24.99),
-            Supplement("pre_workout", "Pre-Workout", "Boosts energy and focus for your workouts.", 34.99),
-            Supplement("multivitamin", "Multivitamin", "Ensures you get all the essential vitamins and minerals.", 14.99)
+            Supplement("on_whey", "Optimum Nutrition Gold Standard Whey", "Top-rated protein powder for muscle recovery.", 34.99, "${amazonUrl}optimum+nutrition+gold+standard+whey"),
+            Supplement("muscletech_creatine", "MuscleTech Platinum Creatine", "Highly pure micronized creatine for performance.", 19.99, "${amazonUrl}muscletech+platinum+creatine"),
+            Supplement("muscleblaze_bcaas", "MuscleBlaze BCAA Powder", "Intra-workout support for muscle recovery.", 24.99, "${amazonUrl}muscleblaze+bcaa"),
+            Supplement("c4_pre", "Cellucor C4 Pre-Workout", "The original explosive pre-workout energy.", 29.99, "${amazonUrl}cellucor+c4+pre+workout"),
+            Supplement("multivitamin", "Garden of Life Multivitamin", "Organic whole food multivitamin for daily health.", 14.99, "${amazonUrl}garden+of+life+multivitamin")
         )
     }
 }
@@ -194,13 +141,13 @@ class SupplementsAdapter(
     inner class SupplementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val nameTextView: TextView = itemView.findViewById(R.id.supplementName)
         private val descriptionTextView: TextView = itemView.findViewById(R.id.supplementDescription)
+        private val priceTextView: TextView = itemView.findViewById(R.id.supplementPrice)
         private val buyButton: Button = itemView.findViewById(R.id.buyButton)
 
         fun bind(supplement: Supplement) {
             nameTextView.text = supplement.name
             descriptionTextView.text = supplement.description
-            val priceText = if (supplement.price > 0) "Buy - $${String.format("%.2f", supplement.price)}" else "Buy Now"
-            buyButton.text = priceText
+            priceTextView.text = if (supplement.price > 0) "$${String.format("%.2f", supplement.price)}" else ""
             buyButton.setOnClickListener {
                 onBuyClicked(supplement)
             }

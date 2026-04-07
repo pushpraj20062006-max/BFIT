@@ -3,7 +3,7 @@
     <string name="height_cm">Height (cm)</string>
     <string name="height_ft">Height (ft)</string>
     <string name="please_fill_all_fields">Please fill all fields</string>
-    <string name="scanned_food_calories">%s %s</string>
+    <string name="scanned_food_calories">%1$s %2$s</string>
     <string name="calories_consumed">Calories consumed: %1$d/%2$d kcal</string>
     <string name="calories_and_protein_consumed">Calories: %1$d/%2$d kcal | Protein: %3$d/%4$d g</string>
     <string name="app_logo_content_description">App Logo</string>
@@ -19,18 +19,34 @@
     <string name="allergies">Allergies (comma-separated)</string>
     <string name="lactose_intolerant">Lactose Intolerant</string>
     <string name="generate_plan">Generate Plan</string>
-    <string name="todays_plan">Todays Plan</string>
+    <string name="todays_plan">Today\'s Plan</string>
     <string name="view_plan">View Plan</string>
     <string name="logout">Logout</string>
     <string name="launch_chatbot">Launch Chatbot</string>
     <string name="daily_summary">Daily Summary</string>
     <string name="protein">Protein</string>
-    <string name="view_full_plan">View Full Plan</string>
-    <string name="store">Store</string>
+    <string name="view_full_plan">Full Plan</string>
+    <string name="store">Shop</string>
     <string name="recommended_supplements">Recommended Supplements</string>
-    <string name="buy_now">Buy Now</string>
+    <string name="buy_now">View on Amazon</string>
     <string name="calories_consumed_format">%1$d / %2$d kcal</string>
-    <string name="calorie_progress_format">%1$d
-kcal</string>
+    <string name="calorie_progress_format">%1$d\nkcal</string>
     <string name="protein_consumed_format">%1$d / %2$d g</string>
+
+    <!-- New strings for refinements -->
+    <string name="bmi_result_format">BMI: %.1f · %s</string>
+    <string name="streak_format">🔥 %d day streak</string>
+    <string name="back">Back</string>
+    <string name="planner_title">Meal &amp; Workout Planner</string>
+    <string name="store_title">Supplement Store</string>
+    <string name="chat_title">AI Fitness Coach</string>
+    <string name="scanner_title">Scan Product</string>
+    <string name="scanner_hint">Point camera at a barcode</string>
+    <string name="close">Close</string>
+    <string name="chat_empty_state">Ask me anything about fitness, nutrition, or workouts! 💪</string>
+    <string name="no_plan_for_date">No plan available for this date</string>
+    <string name="purchase_history">Purchase History</string>
+    <string name="no_purchase_history">No purchase history yet</string>
+    <string name="mark_day_complete">Mark Day Complete ✓</string>
+    <string name="profile">Profile</string>
 </resources>

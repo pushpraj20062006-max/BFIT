@@ -25,6 +25,7 @@ import com.example.bfit.database.ExtraMealItem
 import com.example.bfit.database.FirestoreRepository
 import com.example.bfit.database.PlanRepository
 import com.example.bfit.network.RetrofitInstance
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -51,6 +52,8 @@ class MainActivity : AppCompatActivity() {
 
     private var isCm = true
     private var currentPlan: PlanResult? = null
+    private var currentBmi: Float = 0f
+    private var currentGoal: String = ""
     private lateinit var sharedPreferences: SharedPreferences
     private val gson = Gson()
     private lateinit var planRepository: PlanRepository
@@ -179,8 +182,9 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
         planRepository = PlanRepository(this)
 
-        // Check if user is authenticated
-        if (auth.currentUser == null) {
+        // Check if user is authenticated or in demo mode
+        val isDemoMode = sharedPreferences.getBoolean(LoginActivity.DEMO_MODE_KEY, false)
+        if (auth.currentUser == null && !isDemoMode) {
             startActivity(Intent(this, LoginActivity::class.java))
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             finish()
@@ -251,6 +255,8 @@ class MainActivity : AppCompatActivity() {
             val w = weight.toFloat()
 
             val bmi = w / (h * h)
+            currentBmi = bmi
+            currentGoal = goal
             currentPlan = getPlan(bmi, selectedGender, selectedDiet, goal, allergies.split(",").map { it.trim().lowercase() }, isLactoseIntolerant)
             saveUserData(age, height, weight, selectedGender, selectedDiet, goal, allergies, isLactoseIntolerant, currentPlan!!)
 
@@ -280,9 +286,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         scanBtn.setOnClickListener {
-            val intent = Intent(this, ScannerActivity::class.java)
-            scannerLauncher.launch(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            launchScanner()
+        }
+
+        // Dashboard scan button
+        val scanDashBtn = dashboardView.findViewById<Button>(R.id.scanDashBtn)
+        scanDashBtn.setOnClickListener {
+            launchScanner()
         }
 
         val viewPlanBtn = dashboardView.findViewById<Button>(R.id.viewPlanBtn)
@@ -332,13 +342,51 @@ class MainActivity : AppCompatActivity() {
         loadUserData()
     }
 
+    private fun launchScanner() {
+        val intent = Intent(this, ScannerActivity::class.java)
+        scannerLauncher.launch(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
+
     private fun showProfileDialog() {
-        val user = auth.currentUser ?: return
+        val user = auth.currentUser
+        val isDemoMode = sharedPreferences.getBoolean(LoginActivity.DEMO_MODE_KEY, false)
+
+        // Handle demo mode where there is no Firebase user
+        if (user == null && !isDemoMode) return
+
+        if (isDemoMode && user == null) {
+            // Demo mode — show local data
+            val height = sharedPreferences.getString("height", "Not set") ?: "Not set"
+            val weight = sharedPreferences.getString("weight", "Not set") ?: "Not set"
+            val goal = sharedPreferences.getString("goal", "Not set") ?: "Not set"
+            val diet = sharedPreferences.getString("diet", "Not set") ?: "Not set"
+
+            val message = """
+                👤 Mode: Demo
+                📏 Height: ${height}cm
+                ⚖️ Weight: ${weight}kg
+                🎯 Goal: $goal
+                🥗 Diet: $diet
+            """.trimIndent()
+
+            AlertDialog.Builder(this)
+                .setTitle("Your Profile")
+                .setMessage(message)
+                .setPositiveButton("Edit") { _, _ ->
+                    clearUserData()
+                    currentPlan = null
+                    showInputForm()
+                }
+                .setNegativeButton("Close", null)
+                .show()
+            return
+        }
 
         lifecycleScope.launch {
             val profile = firestoreRepository.getUserProfile()
-            val email = user.email ?: "N/A"
-            val displayName = profile?.get("displayName") as? String ?: user.displayName ?: "N/A"
+            val email = user?.email ?: "N/A"
+            val displayName = profile?.get("displayName") as? String ?: user?.displayName ?: "N/A"
             val height = profile?.get("height")
             val weight = profile?.get("weight")
             val goal = profile?.get("healthGoal") as? String ?: "N/A"
@@ -393,6 +441,8 @@ class MainActivity : AppCompatActivity() {
             putString("allergies", allergies)
             putBoolean("isLactoseIntolerant", isLactoseIntolerant)
             putString("plan", gson.toJson(plan))
+            putFloat("bmi", currentBmi)
+            putString("currentGoal", currentGoal)
         }
     }
 
@@ -401,6 +451,8 @@ class MainActivity : AppCompatActivity() {
         if (planJson != null) {
             val type = object : TypeToken<PlanResult>() {}.type
             currentPlan = gson.fromJson(planJson, type)
+            currentBmi = sharedPreferences.getFloat("bmi", 0f)
+            currentGoal = sharedPreferences.getString("currentGoal", "") ?: ""
             showDashboard()
         } else {
             showInputForm()
@@ -410,6 +462,8 @@ class MainActivity : AppCompatActivity() {
     private fun clearUserData() {
         sharedPreferences.edit { clear() }
         currentPlan = null
+        currentBmi = 0f
+        currentGoal = ""
     }
 
     private fun showDashboard() {
@@ -418,10 +472,30 @@ class MainActivity : AppCompatActivity() {
 
         // Show welcome message with user name
         val welcomeText = dashboardView.findViewById<TextView>(R.id.welcomeText)
-        val displayName = auth.currentUser?.displayName
-            ?: auth.currentUser?.email?.substringBefore("@")
-            ?: "Athlete"
+        val isDemoMode = sharedPreferences.getBoolean(LoginActivity.DEMO_MODE_KEY, false)
+        val displayName = if (isDemoMode) {
+            "Athlete"
+        } else {
+            auth.currentUser?.displayName
+                ?: auth.currentUser?.email?.substringBefore("@")
+                ?: "Athlete"
+        }
         welcomeText?.text = "Welcome, $displayName!"
+
+        // Show BMI card
+        val bmiCard = dashboardView.findViewById<MaterialCardView>(R.id.bmiCard)
+        val bmiValueText = dashboardView.findViewById<TextView>(R.id.bmiValueText)
+        val bmiCategoryText = dashboardView.findViewById<TextView>(R.id.bmiCategoryText)
+        val bmiGoalText = dashboardView.findViewById<TextView>(R.id.bmiGoalText)
+
+        if (currentBmi > 0) {
+            bmiCard.visibility = View.VISIBLE
+            bmiValueText.text = String.format(Locale.getDefault(), "BMI: %.1f", currentBmi)
+            bmiCategoryText.text = currentPlan?.category ?: ""
+            bmiGoalText.text = if (currentGoal.isNotEmpty()) "Goal: $currentGoal" else ""
+        } else {
+            bmiCard.visibility = View.GONE
+        }
 
         val dailyPlanRecyclerView = dashboardView.findViewById<RecyclerView>(R.id.dailyPlanRecyclerView)
 
@@ -537,18 +611,18 @@ class MainActivity : AppCompatActivity() {
         calorieProgressText.text = getString(R.string.calorie_progress_format, caloriesConsumed)
 
         if (totalCalories > 0) {
-            calorieProgressIndicator.progress = (caloriesConsumed * 100) / totalCalories
+            calorieProgressIndicator.progress = ((caloriesConsumed * 100) / totalCalories).coerceAtMost(100)
         }
 
         proteinProgressText.text = getString(R.string.protein_consumed_format, proteinConsumed, totalProtein)
         if (totalProtein > 0) {
-            proteinProgressIndicator.progress = (proteinConsumed * 100) / totalProtein
+            proteinProgressIndicator.progress = ((proteinConsumed * 100) / totalProtein).coerceAtMost(100)
         }
     }
 
     private fun updateStreak() {
         val streak = planRepository.getStreak()
-        streakText.text = "$streak day streak"
+        streakText.text = getString(R.string.streak_format, streak)
     }
 
     private fun showInputForm() {

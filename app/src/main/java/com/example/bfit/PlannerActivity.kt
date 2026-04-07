@@ -2,6 +2,8 @@ package com.example.bfit
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bfit.database.PlanRepository
@@ -24,6 +26,12 @@ class PlannerActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         planRepository = PlanRepository(this)
+
+        // Back button
+        binding.backButton.setOnClickListener {
+            finish()
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        }
 
         val planResult = getSerializable(intent, "plan", PlanResult::class.java)
 
@@ -113,7 +121,13 @@ class PlannerActivity : AppCompatActivity() {
             }
             updatePlanForDate(selectedDate)
             updateStreak()
+            Toast.makeText(this, "Day marked as complete! 🎉", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
     private fun updateStreak() {
@@ -142,6 +156,18 @@ class PlannerActivity : AppCompatActivity() {
                     PlanListItem.PlanItem(id = it.id, type = ItemType.FOOD, text = "${it.text} (${it.calories} kcal, ${it.protein} g protein)", isCompleted = planRepository.isPlanItemComplete(it.id))
                 })
             }
+        }
+
+        // Show/hide empty state
+        val emptyStateText = findViewById<TextView>(R.id.emptyStateText)
+        if (generatedPlan.isEmpty()) {
+            emptyStateText?.visibility = View.VISIBLE
+            binding.planRecyclerView.visibility = View.GONE
+            binding.markDayCompleteBtn.isEnabled = false
+        } else {
+            emptyStateText?.visibility = View.GONE
+            binding.planRecyclerView.visibility = View.VISIBLE
+            binding.markDayCompleteBtn.isEnabled = true
         }
 
         val finalPlanItems = generatedPlan.map { item ->

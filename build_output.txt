@@ -1,0 +1,179 @@
+﻿> Task :app:clean
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:dataBindingMergeDependencyArtifactsDebug
+> Task :app:generateDebugResValues
+> Task :app:generateDebugResources
+> Task :app:processDebugGoogleServices
+
+> Task :app:mergeDebugResources
+C:\Users\Pushp Raj\.gradle\caches\8.13\transforms\42474d902f5e0ef8468b67cb7e62afd6\transformed\appcompat-1.7.1\res\values\values.xml:207:4: Multiple substitutions specified in non-positional format of string resource string/scanned_food_calories. Did you mean to add the formatted="false" attribute?
+
+> Task :app:packageDebugResources
+> Task :app:generateDebugBuildConfig
+> Task :app:mapDebugSourceSetPaths
+> Task :app:checkDebugAarMetadata
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug
+> Task :app:parseDebugLocalResources
+> Task :app:processDebugMainManifest
+> Task :app:dataBindingGenBaseClassesDebug
+> Task :app:processDebugManifest
+> Task :app:processDebugManifestForPackage
+> Task :app:processDebugResources
+
+> Task :app:kspDebugKotlin FAILED
+.\gradlew.bat : e: file:///
+C:/Users/Pushp%20Raj/.gradl
+e/caches/8.13/transforms/57
+400a5c0cb12c95a112e6d486bf3
+49f/transformed/jetified-ko
+tlinx-serialization-json-jv
+m-1.9.0.jar!/META-INF/kotli
+nx-serialization-json.kotli
+n_module Module was 
+compiled with an 
+incompatible version of 
+Kotlin. The binary version 
+of its metadata is 2.2.0, 
+expected version is 2.0.0.
+At line:1 char:65
++ ... \Android 
+Studio\jbr"; .\gradlew.bat 
+clean kspDebugKotlin 2>&1 
+| Out-F ...
++                          
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
+    + CategoryInfo         
+     : NotSpecified: (e: 
+file    :///C:/U...rsion 
+is 2.0.    0.:String) [], 
+RemoteExc    eption
+    + 
+FullyQualifiedErrorId     
+: NativeCommandError
+ 
+e: file:///C:/Users/Pushp%2
+0Raj/.gradle/caches/8.13/tr
+ansforms/a6c1912367f81466f8
+a960a26341cb6c/transformed/
+jetified-okio-jvm-3.16.4.ja
+r!/META-INF/okio.kotlin_mod
+ule Module was compiled 
+with an incompatible 
+version of Kotlin. The 
+binary version of its 
+metadata is 2.2.0, 
+expected version is 2.0.0.
+e: file:///C:/Users/Pushp%2
+0Raj/.gradle/caches/8.13/tr
+ansforms/b55d95674645a112a9
+8fcc5b56f62ac0/transformed/
+jetified-clerk-android-api-
+1.0.1-api.jar!/META-INF/api
+_release.kotlin_module 
+Module was compiled with 
+an incompatible version of 
+Kotlin. The binary version 
+of its metadata is 2.3.0, 
+expected version is 2.0.0.
+e: file:///C:/Users/Pushp%2
+0Raj/.gradle/caches/8.13/tr
+ansforms/c66d7f6f1bf6d637a9
+546045a8258dce/transformed/
+jetified-kotlin-stdlib-2.3.
+10.jar!/META-INF/kotlin-std
+lib-jdk7.kotlin_module 
+Module was compiled with 
+an incompatible version of 
+Kotlin. The binary version 
+of its metadata is 2.3.0, 
+expected version is 2.0.0.
+e: file:///C:/Users/Pushp%2
+0Raj/.gradle/caches/8.13/tr
+ansforms/c66d7f6f1bf6d637a9
+546045a8258dce/transformed/
+jetified-kotlin-stdlib-2.3.
+10.jar!/META-INF/kotlin-std
+lib-jdk8.kotlin_module 
+Module was compiled with 
+an incompatible version of 
+Kotlin. The binary version 
+of its metadata is 2.3.0, 
+expected version is 2.0.0.
+e: file:///C:/Users/Pushp%2
+0Raj/.gradle/caches/8.13/tr
+ansforms/c66d7f6f1bf6d637a9
+546045a8258dce/transformed/
+jetified-kotlin-stdlib-2.3.
+10.jar!/META-INF/kotlin-std
+lib.kotlin_module Module 
+was compiled with an 
+incompatible version of 
+Kotlin. The binary version 
+of its metadata is 2.3.0, 
+expected version is 2.0.0.
+e: file:///C:/Users/Pushp%2
+0Raj/.gradle/caches/8.13/tr
+ansforms/d93e6468e317c43a59
+6a0a0b507b611f/transformed/
+jetified-okhttp-release-api
+.jar!/META-INF/okhttp.kotli
+n_module Module was 
+compiled with an 
+incompatible version of 
+Kotlin. The binary version 
+of its metadata is 2.2.0, 
+expected version is 2.0.0.
+e: file:///C:/Users/Pushp%2
+0Raj/.gradle/caches/8.13/tr
+ansforms/e4dda96096c6c9d272
+1bf0eb2ac12be0/transformed/
+jetified-kotlinx-serializat
+ion-core-jvm-1.9.0.jar!/MET
+A-INF/kotlinx-serialization
+-core.kotlin_module Module 
+was compiled with an 
+incompatible version of 
+Kotlin. The binary version 
+of its metadata is 2.2.0, 
+expected version is 2.0.0.
+
+[Incubating] Problems report is available at: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with 
+an exception.
+
+* What went wrong:
+Execution failed for task 
+':app:kspDebugKotlin'.
+> A failure occurred while 
+executing org.jetbrains.kot
+lin.compilerRunner.GradleCo
+mpilerRunnerWithWorkers$Gra
+dleKotlinCompilerWorkAction
+   > Compilation error. 
+See log for more details
+
+* Try:
+> Run with --stacktrace 
+option to get the stack 
+trace.
+> Run with --info or 
+--debug option to get more 
+log output.
+> Run with --scan to get 
+full insights.
+> Get more help at 
+https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.13/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 26s
+19 actionable tasks: 19 executed

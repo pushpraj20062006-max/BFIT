@@ -27,12 +27,21 @@ class ChatActivity : AppCompatActivity() {
 
         firestoreRepository = FirestoreRepository()
 
+        // Back button
+        binding.backButton.setOnClickListener {
+            finish()
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        }
+
         // Setup RecyclerView
         chatAdapter = ChatAdapter(chatMessages)
         val layoutManager = LinearLayoutManager(this)
         layoutManager.stackFromEnd = true
         binding.chatRecyclerView.layoutManager = layoutManager
         binding.chatRecyclerView.adapter = chatAdapter
+
+        // Show empty state initially
+        updateEmptyState()
 
         // Load existing session or check for previous sessions
         val existingSessionId = intent.getStringExtra("sessionId")
@@ -87,10 +96,26 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
+
     private fun addMessage(text: String, isUser: Boolean) {
         chatMessages.add(ChatMessage(text, isUser))
         chatAdapter.notifyItemInserted(chatMessages.size - 1)
         binding.chatRecyclerView.scrollToPosition(chatMessages.size - 1)
+        updateEmptyState()
+    }
+
+    private fun updateEmptyState() {
+        if (chatMessages.isEmpty()) {
+            binding.emptyStateLayout.visibility = View.VISIBLE
+            binding.chatRecyclerView.visibility = View.GONE
+        } else {
+            binding.emptyStateLayout.visibility = View.GONE
+            binding.chatRecyclerView.visibility = View.VISIBLE
+        }
     }
 
     private fun loadChatHistory() {
@@ -108,6 +133,7 @@ class ChatActivity : AppCompatActivity() {
                 if (chatMessages.isNotEmpty()) {
                     binding.chatRecyclerView.scrollToPosition(chatMessages.size - 1)
                 }
+                updateEmptyState()
             } catch (e: Exception) {
                 Toast.makeText(this@ChatActivity, "Error loading history: ${e.message}", Toast.LENGTH_SHORT).show()
             } finally {
@@ -142,6 +168,7 @@ class ChatActivity : AppCompatActivity() {
                         chatMessages.clear()
                         chatAdapter.notifyDataSetChanged()
                         sessionId = UUID.randomUUID().toString()
+                        updateEmptyState()
                     }
                     .show()
             } catch (e: Exception) {

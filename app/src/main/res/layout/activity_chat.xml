@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ChatActivity">
 
-    <!-- Toolbar with history button -->
+    <!-- Toolbar with back + history button -->
     <LinearLayout
         android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
@@ -14,15 +14,24 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:padding="8dp"
+        android:elevation="4dp"
         android:background="?attr/colorSurfaceContainer">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/backButton"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/back"
+            app:icon="@android:drawable/ic_menu_close_clear_cancel" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="AI Fitness Coach"
+            android:text="@string/chat_title"
             android:textAppearance="?attr/textAppearanceTitleLarge"
-            android:paddingStart="8dp"
+            android:paddingStart="4dp"
             android:paddingEnd="8dp" />
 
         <com.google.android.material.button.MaterialButton
@@ -35,6 +44,36 @@
 
     </LinearLayout>
 
+    <!-- Empty state (shown before first message) -->
+    <LinearLayout
+        android:id="@+id/emptyStateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbarLayout"
+        android:layout_above="@+id/inputLayout"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_baseline_chat_24"
+            app:tint="?attr/colorPrimary"
+            android:alpha="0.5"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="Chat" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chat_empty_state"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:gravity="center" />
+
+    </LinearLayout>
+
     <!-- Chat messages RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
@@ -44,6 +83,8 @@
         android:layout_above="@+id/inputLayout"
         android:padding="8dp"
         android:clipToPadding="false"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/list_item_chat_user" />
 
@@ -64,6 +105,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="8dp"
+        android:elevation="4dp"
         android:background="?attr/colorSurfaceContainer">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -82,10 +124,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/askButton"
+            style="@style/Widget.Material3.Button.IconButton.Filled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Ask" />
+            android:contentDescription="Send"
+            app:icon="@android:drawable/ic_menu_send" />
     </LinearLayout>
 
 </RelativeLayout>

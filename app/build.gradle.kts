@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.example.bfit"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.bfit"
@@ -31,9 +31,6 @@ android {
         val geminiApiKey = localProperties.getProperty("gemini.apiKey", "YOUR_API_KEY")
         buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
 
-        val clerkKey = localProperties.getProperty("clerk.publishableKey", "YOUR_CLERK_KEY")
-        buildConfigField("String", "CLERK_PUBLISHABLE_KEY", "\"$clerkKey\"")
-
         // Default Web Client ID for Google Sign-In
         val webClientId = localProperties.getProperty("google.webClientId", "YOUR_WEB_CLIENT_ID")
         buildConfigField("String", "GOOGLE_WEB_CLIENT_ID", "\"$webClientId\"")
@@ -41,6 +38,7 @@ android {
 
     buildTypes {
         release {
+            @Suppress("DEPRECATION")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -50,11 +48,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         viewBinding = true
@@ -76,13 +74,9 @@ dependencies {
     // Firebase BOM (manages all Firebase versions)
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
 
-    // Clerk Authentication
-    implementation("com.clerk:clerk-android-api:0.1.0") {
-        exclude(group = "com.clerk", module = "clerk-android-telemetry")
-    }
-
-    // Google Sign-In (Still useful for Clerk's OAuth)
+    // Google Sign-In
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
     // ML Kit Barcode Scanning

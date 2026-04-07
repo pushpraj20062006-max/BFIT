@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -31,6 +32,12 @@ class ScannerActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         barcodeScanner = BarcodeScanning.getClient()
+
+        // Close button
+        findViewById<Button>(R.id.closeButton).setOnClickListener {
+            finish()
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        }
 
         if (allPermissionsGranted()) {
             startCamera()

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [PlanItemCompletion::class, DailyLog::class, ExtraMealItem::class], version = 4)
+@Database(entities = [PlanItemCompletion::class, DailyLog::class, ExtraMealItem::class], version = 4, exportSchema = false)
 abstract class PlanDatabase : RoomDatabase() {
 
     abstract fun planDao(): PlanDao
