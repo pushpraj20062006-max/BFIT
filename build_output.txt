@@ -1,62 +1,57 @@
 ﻿Reusing configuration cache.
 > Task :app:preBuild UP-TO-DATE
 > Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :app:processDebugGoogleServices UP-TO-DATE
 > Task :app:preDebugBuild UP-TO-DATE
-> Task :app:generateDebugResValues UP-TO-DATE
 > Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
-> Task :app:generateDebugBuildConfig UP-TO-DATE
-> Task :app:generateDebugResources UP-TO-DATE
-> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
-> Task :app:mergeDebugShaders UP-TO-DATE
-> Task :app:javaPreCompileDebug UP-TO-DATE
-> Task :app:validateSigningDebug UP-TO-DATE
-> Task :app:writeDebugAppMetadata UP-TO-DATE
-> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:processDebugGoogleServices UP-TO-DATE
 > Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
 > Task :app:desugarDebugFileDependencies UP-TO-DATE
-> Task :app:extractDeepLinksDebug UP-TO-DATE
-> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
 > Task :app:compileDebugShaders NO-SOURCE
 > Task :app:generateDebugAssets UP-TO-DATE
-> Task :app:parseDebugLocalResources UP-TO-DATE
-> Task :app:mergeDebugAssets UP-TO-DATE
-> Task :app:compressDebugAssets UP-TO-DATE
-> Task :app:mergeDebugResources UP-TO-DATE
-> Task :app:mapDebugSourceSetPaths UP-TO-DATE
-> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
 > Task :app:checkDebugDuplicateClasses UP-TO-DATE
 > Task :app:mergeLibDexDebug UP-TO-DATE
-> Task :app:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
 > Task :app:mergeDebugNativeLibs UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
 > Task :app:stripDebugDebugSymbols UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
 > Task :app:processDebugMainManifest UP-TO-DATE
 > Task :app:processDebugManifest UP-TO-DATE
-> Task :app:mergeExtDexDebug UP-TO-DATE
 > Task :app:processDebugManifestForPackage UP-TO-DATE
-> Task :app:dataBindingGenBaseClassesDebug UP-TO-DATE
-> Task :app:processDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:generateDebugResources
+> Task :app:packageDebugResources
+> Task :app:parseDebugLocalResources
+> Task :app:mergeDebugResources
+> Task :app:dataBindingGenBaseClassesDebug
+> Task :app:processDebugResources
 > Task :app:kspDebugKotlin
 
 > Task :app:compileDebugKotlin
-w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/ChatActivity.kt:33:13 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
-w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/ChatActivity.kt:99:18 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
-w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/ChatActivity.kt:100:15 'fun onBackPressed(): Unit' is deprecated. Deprecated in Java.
-w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/ChatActivity.kt:101:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
 w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/GroceryListActivity.kt:37:13 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
 w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/GroceryListActivity.kt:73:18 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
 w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/GroceryListActivity.kt:74:15 'fun onBackPressed(): Unit' is deprecated. Deprecated in Java.
 w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/GroceryListActivity.kt:75:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
 w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/GroceryListActivity.kt:248:46 Unchecked cast of 'Serializable?' to 'T (of fun <T : Serializable?> getSerializable)'.
-w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/LoginActivity.kt:179:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
 w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/MainActivity.kt:173:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
 w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/MainActivity.kt:189:13 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
 w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/MainActivity.kt:303:13 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
 w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/MainActivity.kt:310:13 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
 w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/MainActivity.kt:320:17 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
-w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/MainActivity.kt:329:13 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
-w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/MainActivity.kt:342:21 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
-w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/MainActivity.kt:361:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
+w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/MainActivity.kt:335:13 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
+w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/MainActivity.kt:348:21 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
+w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/MainActivity.kt:367:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
 w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/PlannerActivity.kt:33:13 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
 w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/PlannerActivity.kt:128:18 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
 w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-master/app/src/main/java/com/example/bfit/PlannerActivity.kt:129:15 'fun onBackPressed(): Unit' is deprecated. Deprecated in Java.
@@ -78,6 +73,6 @@ w: file:///C:/Users/Pushp%20Raj/OneDrive/Desktop/Pushpraj%202026/BFIT/BFIT-maste
 > Task :app:assembleDebug
 > Task :app:createDebugApkListingFileRedirect UP-TO-DATE
 
-BUILD SUCCESSFUL in 24s
-41 actionable tasks: 6 executed, 35 up-to-date
+BUILD SUCCESSFUL in 13s
+41 actionable tasks: 13 executed, 28 up-to-date
 Configuration cache entry reused.

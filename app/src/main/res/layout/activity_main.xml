@@ -542,13 +542,30 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabChat"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:orientation="vertical"
         android:layout_margin="16dp"
-        android:contentDescription="@string/launch_chatbot"
-        app:srcCompat="@drawable/ic_baseline_chat_24" />
+        android:gravity="center_horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddMeal"
+            style="@style/Widget.Material3.FloatingActionButton.Small.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:contentDescription="Add Custom Meal"
+            app:srcCompat="@drawable/ic_baseline_restaurant_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/launch_chatbot"
+            app:srcCompat="@drawable/ic_baseline_chat_24" />
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -323,6 +323,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Custom meal FAB
+        val fabAddMeal = findViewById<FloatingActionButton>(R.id.fabAddMeal)
+        fabAddMeal.setOnClickListener {
+            showCustomMealDialog()
+        }
+
         fabChat.setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java)
             startActivity(intent)
@@ -434,6 +440,70 @@ class MainActivity : AppCompatActivity() {
                 .setNegativeButton("Close", null)
                 .show()
         }
+    }
+
+    private fun showCustomMealDialog() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_custom_meal, null)
+        val mealNameInput = dialogView.findViewById<TextInputEditText>(R.id.mealNameInput)
+        val caloriesInput = dialogView.findViewById<TextInputEditText>(R.id.caloriesInput)
+        val proteinInput = dialogView.findViewById<TextInputEditText>(R.id.proteinInput)
+        val carbsInput = dialogView.findViewById<TextInputEditText>(R.id.carbsInput)
+        val fatsInput = dialogView.findViewById<TextInputEditText>(R.id.fatsInput)
+        val addMealButton = dialogView.findViewById<Button>(R.id.addMealButton)
+
+        // Quick-add presets
+        data class QuickMeal(val name: String, val calories: Int, val protein: Int, val carbs: Int, val fats: Int)
+        val presets = mapOf(
+            R.id.chipProteinShake to QuickMeal("Protein Shake", 150, 25, 5, 2),
+            R.id.chipBanana to QuickMeal("Banana", 105, 1, 27, 0),
+            R.id.chipEggs to QuickMeal("2 Boiled Eggs", 155, 13, 1, 11),
+            R.id.chipRice to QuickMeal("Rice Bowl (200g)", 260, 5, 56, 1),
+            R.id.chipSalad to QuickMeal("Mixed Salad", 80, 3, 12, 2)
+        )
+
+        for ((chipId, meal) in presets) {
+            dialogView.findViewById<com.google.android.material.chip.Chip>(chipId).setOnClickListener {
+                mealNameInput.setText(meal.name)
+                caloriesInput.setText(meal.calories.toString())
+                proteinInput.setText(meal.protein.toString())
+                carbsInput.setText(meal.carbs.toString())
+                fatsInput.setText(meal.fats.toString())
+            }
+        }
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        addMealButton.setOnClickListener {
+            val name = mealNameInput.text.toString().trim()
+            val calories = caloriesInput.text.toString().toIntOrNull() ?: 0
+            val protein = proteinInput.text.toString().toIntOrNull() ?: 0
+            val carbs = carbsInput.text.toString().toIntOrNull() ?: 0
+            val fats = fatsInput.text.toString().toIntOrNull() ?: 0
+
+            if (name.isEmpty()) {
+                mealNameInput.error = "Enter a meal name"
+                return@setOnClickListener
+            }
+            if (calories <= 0) {
+                caloriesInput.error = "Enter calories"
+                return@setOnClickListener
+            }
+
+            val today = Calendar.getInstance()
+            today.set(Calendar.HOUR_OF_DAY, 0)
+            today.set(Calendar.MINUTE, 0)
+            today.set(Calendar.SECOND, 0)
+            today.set(Calendar.MILLISECOND, 0)
+
+            addExtraMealItem(name, calories, protein, today.timeInMillis, carbs, fats)
+            dialog.dismiss()
+            Toast.makeText(this, "\"$name\" added to today's log ✅", Toast.LENGTH_SHORT).show()
+            showDashboard() // Refresh dashboard to show updated calories
+        }
+
+        dialog.show()
     }
 
     override fun onResume() {
