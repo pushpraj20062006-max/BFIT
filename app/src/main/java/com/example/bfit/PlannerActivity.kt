@@ -19,6 +19,7 @@ class PlannerActivity : AppCompatActivity() {
     private lateinit var planRepository: PlanRepository
     private var selectedDate: Long = 0
     private val completedDates = mutableSetOf<Long>()
+    private var exerciseOnlyMode: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,11 @@ class PlannerActivity : AppCompatActivity() {
         }
 
         val planResult = getSerializable(intent, "plan", PlanResult::class.java)
+        exerciseOnlyMode = intent.getBooleanExtra("openExerciseOnly", false)
+
+        if (exerciseOnlyMode) {
+            binding.plannerTitleText.text = getString(R.string.exercise_focus_title)
+        }
 
         if (planResult == null) {
             Toast.makeText(this, "Error: Plan data is missing.", Toast.LENGTH_LONG).show()
@@ -142,6 +148,26 @@ class PlannerActivity : AppCompatActivity() {
     private fun updatePlanForDate(date: Long) {
         val generatedPlan = planByDate.getOrDefault(date, emptyList()).toMutableList()
 
+        if (exerciseOnlyMode) {
+            val exerciseOnly = mutableListOf<PlanListItem>()
+            var include = false
+            for (item in generatedPlan) {
+                when (item) {
+                    is PlanListItem.Header -> {
+                        include = item.title == "Exercise"
+                        if (include) {
+                            exerciseOnly.add(item)
+                        }
+                    }
+                    is PlanListItem.PlanItem -> if (include) {
+                        exerciseOnly.add(item)
+                    }
+                }
+            }
+            generatedPlan.clear()
+            generatedPlan.addAll(exerciseOnly)
+        }
+
         val extraItems = planRepository.getExtraMealItems(date)
         if (extraItems.isNotEmpty()) {
             val exerciseIndex = generatedPlan.indexOfFirst { it is PlanListItem.Header && it.title == "Exercise" }
@@ -162,6 +188,11 @@ class PlannerActivity : AppCompatActivity() {
         val emptyStateText = findViewById<TextView>(R.id.emptyStateText)
         if (generatedPlan.isEmpty()) {
             emptyStateText?.visibility = View.VISIBLE
+            emptyStateText?.text = if (exerciseOnlyMode) {
+                getString(R.string.no_exercise_for_date)
+            } else {
+                getString(R.string.no_plan_for_date)
+            }
             binding.planRecyclerView.visibility = View.GONE
             binding.markDayCompleteBtn.isEnabled = false
         } else {

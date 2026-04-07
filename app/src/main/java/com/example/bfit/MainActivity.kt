@@ -306,6 +306,15 @@ class MainActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
+        val exerciseBtn = dashboardView.findViewById<Button>(R.id.exerciseBtn)
+        exerciseBtn.setOnClickListener {
+            val intent = Intent(this, PlannerActivity::class.java)
+            intent.putExtra("plan", currentPlan)
+            intent.putExtra("openExerciseOnly", true)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
         val storeBtn = dashboardView.findViewById<Button>(R.id.storeBtn)
         storeBtn.setOnClickListener {
             val intent = Intent(this, StoreActivity::class.java)
@@ -332,9 +341,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Custom meal FAB
-        val fabAddMeal = findViewById<FloatingActionButton>(R.id.fabAddMeal)
-        fabAddMeal.setOnClickListener {
+        val addCustomMealBtn = dashboardView.findViewById<Button>(R.id.addCustomMealBtn)
+        addCustomMealBtn.setOnClickListener {
             showCustomMealDialog()
         }
 

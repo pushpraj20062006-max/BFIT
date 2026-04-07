@@ -103,4 +103,13 @@
     <string name="section_progress_graph">Progress and Graph</string>
     <string name="section_scan">Food Scan</string>
     <string name="section_utilities">Utilities</string>
+    <string name="section_full_plan">Full Plan</string>
+    <string name="section_exercise">Exercise</string>
+    <string name="section_shop">Shop</string>
+    <string name="section_groceries">Groceries</string>
+    <string name="section_custom_meal">Add Custom Meal</string>
+    <string name="section_account">Account</string>
+    <string name="open_exercise_focus">Open Exercise Focus</string>
+    <string name="exercise_focus_title">Exercise Focus</string>
+    <string name="no_exercise_for_date">No exercise plan for this date</string>
 </resources>
