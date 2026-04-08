@@ -61,6 +61,7 @@ class PlanAdapter(
             is PlanListItem.PlanItem -> {
                 val planViewHolder = holder as PlanViewHolder
                 planViewHolder.itemText.text = item.text
+                planViewHolder.itemCheckBox.setOnCheckedChangeListener(null)
                 planViewHolder.itemCheckBox.isChecked = item.isCompleted
                 planViewHolder.itemCheckBox.setOnCheckedChangeListener { _, isChecked ->
                     item.isCompleted = isChecked

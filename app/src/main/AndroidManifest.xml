@@ -47,10 +47,7 @@
             android:name=".GroceryListActivity"
             android:exported="false" />
         <activity
-            android:name=".ProgressActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MealRecognitionActivity"
+            android:name=".WeeklyReportActivity"
             android:exported="false" />
     </application>
 

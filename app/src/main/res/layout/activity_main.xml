@@ -16,14 +16,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/space_md"
-            android:paddingBottom="96dp"
+            android:padding="16dp"
+            android:paddingBottom="100dp"
+            android:clipToPadding="false"
             android:gravity="center_horizontal">
 
+            <!-- Header: Logo + Streak -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp">
+
+                <!-- Hidden scan button — kept for backward compat, use scanDashBtn instead -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/scanBtn"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    android:contentDescription="@string/scan_food"
+                    app:cornerRadius="16dp"
+                    app:icon="@drawable/ic_baseline_qr_code_scanner_24" />
 
                 <ImageView
                     android:layout_width="80dp"
@@ -38,7 +53,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:textAppearance="?attr/textAppearanceTitleSmall"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:gravity="center_horizontal"
                     tools:text="🔥 5 day streak" />
 
@@ -47,7 +63,8 @@
             <TextView
                 android:id="@+id/headerTitle"
                 android:text="@string/fitness_calorie_planner"
-                android:textAppearance="?attr/textAppearanceHeadlineMedium"
+                android:textSize="28sp"
+                android:textStyle="bold"
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -61,10 +78,11 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.BFIT.Card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_md">
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    android:layout_marginBottom="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -126,10 +144,11 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.BFIT.Card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_lg">
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    android:layout_marginBottom="24dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -142,7 +161,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/gender"
                             android:layout_marginBottom="8dp"
-                            android:textAppearance="?attr/textAppearanceBodyLarge"
+                            android:textSize="16sp"
                             android:textColor="?attr/colorOnSurface" />
 
                         <RadioGroup
@@ -229,7 +248,7 @@
                     app:cornerRadius="16dp"/>
             </LinearLayout>
 
-            <!-- Dashboard View -->
+            <!-- ═══════════ Dashboard View ═══════════ -->
             <LinearLayout
                 android:id="@+id/dashboardView"
                 android:layout_width="match_parent"
@@ -239,7 +258,7 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <!-- Welcome + Action Row -->
+                <!-- Welcome + Profile -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -269,12 +288,13 @@
                 <!-- BMI Result Card -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/bmiCard"
-                    style="@style/Widget.BFIT.Card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
                     app:strokeColor="?attr/colorPrimary"
                     app:strokeWidth="1dp"
-                    android:layout_marginBottom="@dimen/space_md"
+                    android:layout_marginBottom="16dp"
                     android:visibility="gone"
                     tools:visibility="visible">
 
@@ -291,7 +311,7 @@
                             android:src="@drawable/ic_baseline_monitor_weight_24"
                             android:layout_marginEnd="12dp"
                             app:tint="?attr/colorPrimary"
-                            android:contentDescription="@string/bmi_icon_cd" />
+                            android:contentDescription="BMI" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -330,10 +350,11 @@
 
                 <!-- Daily Summary Card -->
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.BFIT.Card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_md">
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    android:layout_marginBottom="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -420,12 +441,13 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Today's Plan Card -->
+                <!-- Today's Meals Card (no exercise) -->
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.BFIT.Card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_md">
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    android:layout_marginBottom="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -451,262 +473,319 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Today's Exercise Card (separate!) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/exerciseCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_baseline_fitness_center_24"
+                                app:tint="?attr/colorPrimary"
+                                android:layout_marginEnd="8dp"
+                                android:contentDescription="Exercise" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Today's Workout"
+                                android:textAppearance="?attr/textAppearanceTitleMedium" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/exerciseRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/list_item_plan"
+                            tools:itemCount="3"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- ═══ Feature Grid — Icons on top, short labels ═══ -->
+
+                <!-- Row 1: Nutrition Features -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nutrition"
+                    android:textAppearance="?attr/textAppearanceLabelLarge"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="4dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/viewPlanCard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:rippleColor="?attr/colorPrimary">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:src="@drawable/ic_baseline_restaurant_24"
+                                app:tint="?attr/colorPrimary"
+                                android:layout_marginBottom="8dp"
+                                android:contentDescription="Plan" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Full Plan"
+                                android:textAppearance="?attr/textAppearanceLabelLarge"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/groceryCard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="6dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:rippleColor="?attr/colorPrimary">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:src="@drawable/ic_baseline_flag_24"
+                                app:tint="?attr/colorPrimary"
+                                android:layout_marginBottom="8dp"
+                                android:contentDescription="Groceries" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Groceries"
+                                android:textAppearance="?attr/textAppearanceLabelLarge"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/scanCard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="6dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:rippleColor="?attr/colorPrimary">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:src="@drawable/ic_baseline_qr_code_scanner_24"
+                                app:tint="?attr/colorPrimary"
+                                android:layout_marginBottom="8dp"
+                                android:contentDescription="Scan" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Scan"
+                                android:textAppearance="?attr/textAppearanceLabelLarge"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <!-- Row 2: Tracking Features -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tracking"
+                    android:textAppearance="?attr/textAppearanceLabelLarge"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="4dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/reportCard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:rippleColor="?attr/colorPrimary">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:src="@drawable/ic_baseline_assessment_24"
+                                app:tint="?attr/colorPrimary"
+                                android:layout_marginBottom="8dp"
+                                android:contentDescription="Report" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Report"
+                                android:textAppearance="?attr/textAppearanceLabelLarge"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/weightCard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="6dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:rippleColor="?attr/colorPrimary">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:src="@drawable/ic_baseline_trending_up_24"
+                                app:tint="?attr/colorPrimary"
+                                android:layout_marginBottom="8dp"
+                                android:contentDescription="Weight" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Weight"
+                                android:textAppearance="?attr/textAppearanceLabelLarge"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/storeCard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="6dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:rippleColor="?attr/colorPrimary">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:src="@drawable/ic_baseline_fitness_center_24"
+                                app:tint="?attr/colorPrimary"
+                                android:layout_marginBottom="8dp"
+                                android:contentDescription="Store" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Shop"
+                                android:textAppearance="?attr/textAppearanceLabelLarge"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <!-- Logout — standalone, clean -->
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/primaryActionBtn"
-                    style="@style/Widget.BFIT.ActionButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/primary_action_todays_plan"
-                    app:icon="@drawable/ic_baseline_flag_24"
-                    app:iconGravity="textStart" />
-
-                <TextView
+                    android:id="@+id/logoutBtn"
+                    style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_md"
-                    android:layout_marginBottom="@dimen/space_xs"
-                    android:text="@string/section_full_plan"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
-
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.BFIT.Card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_md">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/space_xs">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/viewPlanBtn"
-                            style="@style/Widget.BFIT.ActionButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/view_full_plan"
-                            app:icon="@drawable/ic_baseline_restaurant_24"
-                            app:iconGravity="textStart"
-                            app:cornerRadius="12dp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_xs"
-                    android:text="@string/section_exercise"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
-
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.BFIT.Card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_md">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/space_xs">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/exerciseBtn"
-                            style="@style/Widget.BFIT.ActionButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/open_exercise_focus"
-                            app:icon="@drawable/ic_baseline_fitness_center_24"
-                            app:iconGravity="textStart"
-                            app:cornerRadius="12dp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_xs"
-                    android:text="@string/section_progress_graph"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
-
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.BFIT.Card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_md">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/space_xs">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/progressBtn"
-                            style="@style/Widget.Material3.Button.OutlinedButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/weekly_progress"
-                            app:icon="@drawable/ic_baseline_monitor_weight_24"
-                            app:iconGravity="textStart"
-                            app:cornerRadius="12dp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_xs"
-                    android:text="@string/section_scan"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
-
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.BFIT.Card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_md">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/space_xs">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/scanDashBtn"
-                            style="@style/Widget.Material3.Button.OutlinedButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/scan_food_unified"
-                            app:icon="@drawable/ic_baseline_qr_code_scanner_24"
-                            app:iconGravity="textStart"
-                            app:cornerRadius="12dp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_xs"
-                    android:text="@string/section_shop"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
-
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.BFIT.Card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_md">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/space_xs">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/storeBtn"
-                            style="@style/Widget.BFIT.ActionButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/store"
-                            app:icon="@drawable/ic_baseline_fitness_center_24"
-                            app:iconGravity="textStart"
-                            app:cornerRadius="12dp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_xs"
-                    android:text="@string/section_groceries"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
-
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.BFIT.Card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_md">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/space_xs">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/groceryBtn"
-                            style="@style/Widget.BFIT.ActionButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/grocery_list"
-                            app:icon="@drawable/ic_baseline_restaurant_24"
-                            app:iconGravity="textStart"
-                            app:cornerRadius="12dp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_xs"
-                    android:text="@string/section_custom_meal"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
-
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.BFIT.Card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_md">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/space_xs">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/addCustomMealBtn"
-                            style="@style/Widget.BFIT.ActionButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/add_custom_meal"
-                            app:icon="@drawable/ic_baseline_restaurant_24"
-                            app:iconGravity="textStart"
-                            app:cornerRadius="12dp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_xs"
-                    android:text="@string/section_account"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
-
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.BFIT.Card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_md">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/space_xs">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/logoutBtn"
-                            style="@style/Widget.Material3.Button.OutlinedButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/space_xs"
-                            android:text="@string/logout"
-                            app:cornerRadius="12dp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                    android:text="@string/logout"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:layout_marginBottom="72dp" />
 
             </LinearLayout>
 
@@ -714,14 +793,21 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/dashboardFabContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:orientation="vertical"
         android:layout_margin="16dp"
-        android:contentDescription="@string/dashboard_actions_cd"
         android:gravity="center_horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddMeal"
+            style="@style/Widget.Material3.FloatingActionButton.Small.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:contentDescription="Add Custom Meal"
+            app:srcCompat="@drawable/ic_baseline_restaurant_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabChat"

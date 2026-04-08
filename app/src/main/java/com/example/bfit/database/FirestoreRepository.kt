@@ -29,6 +29,7 @@ class FirestoreRepository {
         private const val DAILY_LOGS_COLLECTION = "daily_logs"
         private const val SUPPLEMENTS_COLLECTION = "supplements"
         private const val PURCHASES_COLLECTION = "purchases"
+        private const val WEIGHT_HISTORY_COLLECTION = "weight_history"
     }
 
     // ==================== USER PROFILE ====================
@@ -295,6 +296,63 @@ class FirestoreRepository {
         } catch (e: Exception) {
             Log.e(TAG, "Error getting purchase history", e)
             emptyList()
+        }
+    }
+
+    // ==================== WEIGHT TRACKING ====================
+
+    suspend fun saveWeightEntry(date: Long, weight: Float, bmi: Float) {
+        val uid = currentUserId ?: return
+        try {
+            val weightData = hashMapOf(
+                "date" to date,
+                "weight" to weight,
+                "bmi" to bmi,
+                "recordedAt" to com.google.firebase.Timestamp.now()
+            )
+            firestore.collection(USERS_COLLECTION)
+                .document(uid)
+                .collection(WEIGHT_HISTORY_COLLECTION)
+                .document(date.toString())
+                .set(weightData, SetOptions.merge())
+                .await()
+            Log.d(TAG, "Weight entry saved successfully")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error saving weight entry", e)
+        }
+    }
+
+    suspend fun getWeightHistory(limit: Int = 30): List<Map<String, Any>> {
+        val uid = currentUserId ?: return emptyList()
+        return try {
+            val snapshot = firestore.collection(USERS_COLLECTION)
+                .document(uid)
+                .collection(WEIGHT_HISTORY_COLLECTION)
+                .orderBy("date", com.google.firebase.firestore.Query.Direction.DESCENDING)
+                .limit(limit.toLong())
+                .get()
+                .await()
+            snapshot.documents.mapNotNull { it.data }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting weight history", e)
+            emptyList()
+        }
+    }
+
+    suspend fun getLatestWeight(): Map<String, Any>? {
+        val uid = currentUserId ?: return null
+        return try {
+            val snapshot = firestore.collection(USERS_COLLECTION)
+                .document(uid)
+                .collection(WEIGHT_HISTORY_COLLECTION)
+                .orderBy("date", com.google.firebase.firestore.Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .await()
+            snapshot.documents.firstOrNull()?.data
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting latest weight", e)
+            null
         }
     }
 }

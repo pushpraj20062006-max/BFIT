@@ -66,9 +66,23 @@ class MainActivity : AppCompatActivity() {
 
     private val scannerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
-            val barcode = it.data?.getStringExtra("barcode")
-            if (barcode != null) {
-                fetchFoodData(barcode)
+            val data = it.data ?: return@registerForActivityResult
+            val isAiResult = data.getBooleanExtra("is_ai_result", false)
+
+            if (isAiResult) {
+                // AI Vision result — show food info directly
+                val name = data.getStringExtra("ai_food_name") ?: "Unknown Food"
+                val calories = data.getIntExtra("ai_calories", 0)
+                val protein = data.getIntExtra("ai_protein", 0)
+                val carbs = data.getIntExtra("ai_carbs", 0)
+                val fats = data.getIntExtra("ai_fats", 0)
+                showFoodInfoDialog(name, calories.toDouble(), protein.toDouble(), carbs.toDouble(), fats.toDouble())
+            } else {
+                // Barcode result — fetch from OpenFoodFacts
+                val barcode = data.getStringExtra("barcode")
+                if (barcode != null) {
+                    fetchFoodData(barcode)
+                }
             }
         }
     }
@@ -203,6 +217,7 @@ class MainActivity : AppCompatActivity() {
         val weightInput = inputForm.findViewById<EditText>(R.id.weightInput)
         val genderRadioGroup = inputForm.findViewById<RadioGroup>(R.id.genderRadioGroup)
         val calcBtn = inputForm.findViewById<Button>(R.id.calcBtn)
+        val scanBtn = findViewById<Button>(R.id.scanBtn)
         val fabChat = findViewById<FloatingActionButton>(R.id.fabChat)
         val dietaryPreference = inputForm.findViewById<AutoCompleteTextView>(R.id.dietaryPreference)
         val bodyGoal = inputForm.findViewById<AutoCompleteTextView>(R.id.bodyGoal)
@@ -284,53 +299,25 @@ class MainActivity : AppCompatActivity() {
             showDashboard()
         }
 
-        // Dashboard scan button
-        val scanDashBtn = dashboardView.findViewById<Button>(R.id.scanDashBtn)
-        scanDashBtn.setOnClickListener {
-            showScanOptionsDialog()
+        scanBtn.setOnClickListener {
+            launchScanner()
         }
 
-        val viewPlanBtn = dashboardView.findViewById<Button>(R.id.viewPlanBtn)
-        viewPlanBtn.setOnClickListener {
+        // Feature card: Full Plan
+        dashboardView.findViewById<View>(R.id.viewPlanCard).setOnClickListener {
             val intent = Intent(this, PlannerActivity::class.java)
             intent.putExtra("plan", currentPlan)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
-        val primaryActionBtn = dashboardView.findViewById<Button>(R.id.primaryActionBtn)
-        primaryActionBtn.setOnClickListener {
-            val intent = Intent(this, PlannerActivity::class.java)
-            intent.putExtra("plan", currentPlan)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        // Feature card: Scan
+        dashboardView.findViewById<View>(R.id.scanCard).setOnClickListener {
+            launchScanner()
         }
 
-        val exerciseBtn = dashboardView.findViewById<Button>(R.id.exerciseBtn)
-        exerciseBtn.setOnClickListener {
-            val intent = Intent(this, PlannerActivity::class.java)
-            intent.putExtra("plan", currentPlan)
-            intent.putExtra("openExerciseOnly", true)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
-
-        val storeBtn = dashboardView.findViewById<Button>(R.id.storeBtn)
-        storeBtn.setOnClickListener {
-            val intent = Intent(this, StoreActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
-
-        val progressBtn = dashboardView.findViewById<Button>(R.id.progressBtn)
-        progressBtn.setOnClickListener {
-            startActivity(Intent(this, ProgressActivity::class.java))
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
-
-        // Grocery List button
-        val groceryBtn = dashboardView.findViewById<Button>(R.id.groceryBtn)
-        groceryBtn.setOnClickListener {
+        // Feature card: Groceries
+        dashboardView.findViewById<View>(R.id.groceryCard).setOnClickListener {
             if (currentPlan != null) {
                 val intent = Intent(this, GroceryListActivity::class.java)
                 intent.putExtra("plan", currentPlan)
@@ -341,8 +328,30 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val addCustomMealBtn = dashboardView.findViewById<Button>(R.id.addCustomMealBtn)
-        addCustomMealBtn.setOnClickListener {
+        // Feature card: Report
+        dashboardView.findViewById<View>(R.id.reportCard).setOnClickListener {
+            val intent = Intent(this, WeeklyReportActivity::class.java)
+            intent.putExtra("targetCalories", currentPlan?.calories ?: 2000)
+            intent.putExtra("targetProtein", currentPlan?.totalProtein ?: 100)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
+        // Feature card: Weight
+        dashboardView.findViewById<View>(R.id.weightCard).setOnClickListener {
+            showWeightTrackingDialog()
+        }
+
+        // Feature card: Store
+        dashboardView.findViewById<View>(R.id.storeCard).setOnClickListener {
+            val intent = Intent(this, StoreActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
+        // Custom meal FAB
+        val fabAddMeal = findViewById<FloatingActionButton>(R.id.fabAddMeal)
+        fabAddMeal.setOnClickListener {
             showCustomMealDialog()
         }
 
@@ -382,27 +391,6 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, ScannerActivity::class.java)
         scannerLauncher.launch(intent)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-    }
-
-    private fun showScanOptionsDialog() {
-        val options = arrayOf(
-            getString(R.string.scan_option_barcode),
-            getString(R.string.scan_option_meal_photo)
-        )
-
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.scan_title_unified))
-            .setItems(options) { _, which ->
-                when (which) {
-                    0 -> launchScanner()
-                    1 -> {
-                        startActivity(Intent(this, MealRecognitionActivity::class.java))
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-                    }
-                }
-            }
-            .setNegativeButton(getString(R.string.close), null)
-            .show()
     }
 
     private fun showProfileDialog() {
@@ -544,6 +532,91 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    // ─── Weight Tracking ───
+
+    private fun showWeightTrackingDialog() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_weight_tracking, null)
+        val weightInput = dialogView.findViewById<TextInputEditText>(R.id.weightInputDialog)
+        val currentBmiValue = dialogView.findViewById<TextView>(R.id.currentBmiValue)
+        val weightHistoryText = dialogView.findViewById<TextView>(R.id.weightHistoryText)
+        val saveWeightButton = dialogView.findViewById<Button>(R.id.saveWeightButton)
+
+        // Pre-fill with saved weight
+        val savedWeight = sharedPreferences.getString("weight", null)
+        if (savedWeight != null) {
+            weightInput.setText(savedWeight)
+        }
+
+        // Show current BMI
+        if (currentBmi > 0) {
+            currentBmiValue.text = String.format(Locale.getDefault(), "%.1f (%s)", currentBmi, currentPlan?.category ?: "")
+        } else {
+            currentBmiValue.text = "Not calculated"
+        }
+
+        // Show recent weight history
+        val recentEntries = planRepository.getRecentWeightEntries(7)
+        if (recentEntries.isEmpty()) {
+            weightHistoryText.text = getString(R.string.no_weight_history)
+        } else {
+            val historyLines = recentEntries.map { entry ->
+                val cal = java.util.Calendar.getInstance()
+                cal.timeInMillis = entry.date
+                val dateStr = String.format(Locale.getDefault(), "%02d/%02d", cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1)
+                String.format(Locale.getDefault(), "%s  →  %.1f kg (BMI: %.1f)", dateStr, entry.weight, entry.bmi)
+            }
+            weightHistoryText.text = historyLines.joinToString("\n")
+        }
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        saveWeightButton.setOnClickListener {
+            val weightStr = weightInput.text.toString().trim()
+            val weight = weightStr.toFloatOrNull()
+            if (weight == null || weight <= 0) {
+                weightInput.error = "Enter a valid weight"
+                return@setOnClickListener
+            }
+
+            // Calculate BMI using saved height
+            val heightStr = sharedPreferences.getString("height", null)
+            val height = heightStr?.toFloatOrNull()
+            var bmi = 0f
+            if (height != null && height > 0) {
+                val h = height / 100f
+                bmi = weight / (h * h)
+                currentBmi = bmi
+            }
+
+            // Save locally
+            planRepository.addWeightEntry(weight, bmi)
+
+            // Update saved weight in preferences
+            sharedPreferences.edit { putString("weight", weightStr) }
+            sharedPreferences.edit { putFloat("bmi", bmi) }
+
+            // Sync to Firestore
+            lifecycleScope.launch {
+                val today = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, 0)
+                    set(Calendar.MINUTE, 0)
+                    set(Calendar.SECOND, 0)
+                    set(Calendar.MILLISECOND, 0)
+                }
+                firestoreRepository.saveWeightEntry(today.timeInMillis, weight, bmi)
+                firestoreRepository.saveUserProfile(mapOf("weight" to weight))
+            }
+
+            Toast.makeText(this, getString(R.string.weight_saved), Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+            showDashboard() // Refresh dashboard with new BMI
+        }
+
+        dialog.show()
+    }
+
     override fun onResume() {
         super.onResume()
         if (currentPlan != null) {
@@ -619,6 +692,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         val dailyPlanRecyclerView = dashboardView.findViewById<RecyclerView>(R.id.dailyPlanRecyclerView)
+        val exerciseRecyclerView = dashboardView.findViewById<RecyclerView>(R.id.exerciseRecyclerView)
+        val exerciseCard = dashboardView.findViewById<MaterialCardView>(R.id.exerciseCard)
 
         currentPlan?.let { plan ->
             val today = Calendar.getInstance()
@@ -627,42 +702,66 @@ class MainActivity : AppCompatActivity() {
             today.set(Calendar.SECOND, 0)
             today.set(Calendar.MILLISECOND, 0)
             val dayStart = today.timeInMillis
-            val dayOfWeek = ((today.get(Calendar.DAY_OF_WEEK) + 5) % 7 + 1).toString()
-            val mealPlanForToday = plan.mealPlan[dayOfWeek]
-            val dailyPlanItems = mutableListOf<PlanListItem>()
+            val dayKey = ((today.get(Calendar.DAY_OF_WEEK) + 5) % 7 + 1).toString()
+            val mealPlanForToday = plan.mealPlan[dayKey]
 
-            if (mealPlanForToday != null && mealPlanForToday.size >= 3) {
-                val (breakfastText, breakfastCalories, breakfastProtein) = mealPlanForToday[0]
-                val (lunchText, lunchCalories, lunchProtein) = mealPlanForToday[1]
-                val (dinnerText, dinnerCalories, dinnerProtein) = mealPlanForToday[2]
-
-                dailyPlanItems.add(PlanListItem.Header("Breakfast"))
-                dailyPlanItems.add(PlanListItem.PlanItem(id = "$dayStart-FOOD-$breakfastText", type = ItemType.FOOD, text = "$breakfastText ($breakfastCalories kcal, $breakfastProtein g protein)"))
-                dailyPlanItems.add(PlanListItem.Header("Lunch"))
-                dailyPlanItems.add(PlanListItem.PlanItem(id = "$dayStart-FOOD-$lunchText", type = ItemType.FOOD, text = "$lunchText ($lunchCalories kcal, $lunchProtein g protein)"))
-                dailyPlanItems.add(PlanListItem.Header("Dinner"))
-                dailyPlanItems.add(PlanListItem.PlanItem(id = "$dayStart-FOOD-$dinnerText", type = ItemType.FOOD, text = "$dinnerText ($dinnerCalories kcal, $dinnerProtein g protein)"))
+            // ─── Meals only (no exercise) ───
+            val mealItems = mutableListOf<PlanListItem>()
+            if (mealPlanForToday != null) {
+                mealPlanForToday.forEachIndexed { index, meal ->
+                    val (mealName, kcal, protein) = meal
+                    val header = when(index) {
+                        0 -> "Breakfast"
+                        1 -> "Lunch"
+                        2 -> "Dinner"
+                        else -> "Snack ${index - 2}"
+                    }
+                    mealItems.add(PlanListItem.Header(header))
+                    mealItems.add(PlanListItem.PlanItem(
+                        id = "$dayStart-FOOD-$mealName-$index", 
+                        type = ItemType.FOOD, 
+                        text = "$mealName ($kcal kcal, $protein g protein)"
+                    ))
+                }
             }
 
             val extraItems = planRepository.getExtraMealItems(dayStart)
             if (extraItems.isNotEmpty()) {
-                dailyPlanItems.add(PlanListItem.Header("Extras"))
-                dailyPlanItems.addAll(extraItems.map {
+                mealItems.add(PlanListItem.Header("Extras"))
+                mealItems.addAll(extraItems.map {
                     PlanListItem.PlanItem(id = it.id, type = ItemType.FOOD, text = "${it.text} (${it.calories} kcal, ${it.protein} g protein)", isCompleted = planRepository.isPlanItemComplete(it.id))
                 })
             }
 
+            // ─── Exercise (separate card) ───
+            val exerciseItems = mutableListOf<PlanListItem>()
             if (plan.exercises.isNotEmpty()) {
-                dailyPlanItems.add(PlanListItem.Header("Exercise"))
-                dailyPlanItems.addAll(plan.exercises.split("\n").filter { it.isNotBlank() }
+                exerciseItems.addAll(plan.exercises.split("\n").filter { it.isNotBlank() }
                     .map { exerciseText ->
                         PlanListItem.PlanItem(id = "$dayStart-EXERCISE-$exerciseText", type = ItemType.EXERCISE, text = exerciseText)
                     })
             }
 
+            // Show/hide exercise card
+            if (exerciseItems.isNotEmpty()) {
+                exerciseCard.visibility = View.VISIBLE
+                val finalExerciseItems = exerciseItems.map { item ->
+                    if (item is PlanListItem.PlanItem) {
+                        item.isCompleted = planRepository.isPlanItemComplete(item.id)
+                    }
+                    item
+                }
+                exerciseRecyclerView.adapter = PlanAdapter(finalExerciseItems) { item, isCompleted ->
+                    planRepository.markPlanItemAsComplete(item.id, isCompleted, 0, 0)
+                }
+            } else {
+                exerciseCard.visibility = View.GONE
+            }
+
+            // Calculate totals from meals
             var totalCalories = 0
             var totalProtein = 0
-            val finalPlanItems = dailyPlanItems.map { item ->
+            val finalPlanItems = mealItems.map { item ->
                 if (item is PlanListItem.PlanItem) {
                     item.isCompleted = planRepository.isPlanItemComplete(item.id)
                     if (item.isCompleted) {

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- Top bar with close button -->
+    <!-- Top bar with close button + mode toggle -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -31,15 +31,57 @@
             app:iconTint="@android:color/white" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/scanner_title"
             android:textColor="@android:color/white"
             android:textAppearance="?attr/textAppearanceTitleMedium"
             android:paddingStart="4dp"
             android:paddingEnd="8dp" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/modeToggleBtn"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ai_scan_food"
+            android:textColor="@android:color/white"
+            android:textAllCaps="false"
+            app:icon="@drawable/ic_baseline_auto_awesome_24"
+            app:iconTint="@android:color/white" />
+
     </LinearLayout>
+
+    <!-- AI Loading indicator -->
+    <ProgressBar
+        android:id="@+id/aiLoadingIndicator"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Capture Button for AI mode -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/captureButton"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:text="📸 Snap Food"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        app:cornerRadius="24dp"
+        app:icon="@drawable/ic_baseline_camera_alt_24"
+        app:iconTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
 
     <!-- Scan hint at the bottom -->
     <com.google.android.material.card.MaterialCardView
@@ -69,6 +111,7 @@
                 android:contentDescription="Scan" />
 
             <TextView
+                android:id="@+id/modeHintText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/scanner_hint"

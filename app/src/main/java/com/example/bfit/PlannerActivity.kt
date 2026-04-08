@@ -73,13 +73,6 @@ class PlannerActivity : AppCompatActivity() {
                 planItems.add(PlanListItem.Header("Dinner"))
                 planItems.add(PlanListItem.PlanItem(id = "${dayInMillis}-FOOD-$dinnerText", type = ItemType.FOOD, text = "$dinnerText ($dinnerCalories kcal, $dinnerProtein g protein)"))
 
-                if (planResult.exercises.isNotEmpty()) {
-                    planItems.add(PlanListItem.Header("Exercise"))
-                    planItems.addAll(planResult.exercises.split("\n").filter { it.isNotBlank() }
-                        .map { exerciseText ->
-                            PlanListItem.PlanItem(id = "${dayInMillis}-EXERCISE-$exerciseText", type = ItemType.EXERCISE, text = exerciseText)
-                        })
-                }
                 planByDate[dayInMillis] = planItems
             }
 
