@@ -890,9 +890,15 @@ class MainActivity : AppCompatActivity() {
 
         val mealPlan = (1..7).associate { day ->
             day.toString() to listOf(
-                filteredBreakfasts.getOrElse(day - 1) { filteredBreakfasts.random() }.split("|").let { Triple(it[0], it[2].toInt(), it[3].toInt()) },
-                filteredLunches.getOrElse(day - 1) { filteredLunches.random() }.split("|").let { Triple(it[0], it[2].toInt(), it[3].toInt()) },
-                filteredDinners.getOrElse(day - 1) { filteredDinners.random() }.split("|").let { Triple(it[0], it[2].toInt(), it[3].toInt()) }
+                filteredBreakfasts.getOrElse(day - 1) { 
+                    filteredBreakfasts.randomOrNull() ?: Triple("Classic Breakfast", 350, 15) 
+                }.let { if (it is Triple<*, *, *>) it as Triple<String, Int, Int> else (it as String).split("|").let { p -> Triple(p[0], (p.getOrNull(2)?.toIntOrNull() ?: 300), (p.getOrNull(3)?.toIntOrNull() ?: 10)) } },
+                filteredLunches.getOrElse(day - 1) { 
+                    filteredLunches.randomOrNull() ?: Triple("Healthy Lunch", 500, 30) 
+                }.let { if (it is Triple<*, *, *>) it as Triple<String, Int, Int> else (it as String).split("|").let { p -> Triple(p[0], (p.getOrNull(2)?.toIntOrNull() ?: 450), (p.getOrNull(3)?.toIntOrNull() ?: 20)) } },
+                filteredDinners.getOrElse(day - 1) { 
+                    filteredDinners.randomOrNull() ?: Triple("Light Dinner", 450, 25) 
+                }.let { if (it is Triple<*, *, *>) it as Triple<String, Int, Int> else (it as String).split("|").let { p -> Triple(p[0], (p.getOrNull(2)?.toIntOrNull() ?: 400), (p.getOrNull(3)?.toIntOrNull() ?: 25)) } }
             )
         }
 

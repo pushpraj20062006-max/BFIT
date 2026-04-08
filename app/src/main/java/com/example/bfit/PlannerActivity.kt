@@ -59,19 +59,39 @@ class PlannerActivity : AppCompatActivity() {
             val dayOfWeek = ((date.get(Calendar.DAY_OF_WEEK) + 5) % 7 + 1).toString() // Correctly map to the meal plan's day keys
             val mealPlanForDay = planResult.mealPlan[dayOfWeek]
 
-            if (mealPlanForDay != null && mealPlanForDay.size >= 3) {
+            if (mealPlanForDay != null && mealPlanForDay.isNotEmpty()) {
                 val planItems = mutableListOf<PlanListItem>()
 
-                val (breakfastText, breakfastCalories, breakfastProtein) = mealPlanForDay[0]
-                val (lunchText, lunchCalories, lunchProtein) = mealPlanForDay[1]
-                val (dinnerText, dinnerCalories, dinnerProtein) = mealPlanForDay[2]
+                // Safely extract meals; some plans may omit lunch or dinner
+                val breakfast = mealPlanForDay.getOrNull(0)
+                val lunch = mealPlanForDay.getOrNull(1)
+                val dinner = mealPlanForDay.getOrNull(2)
 
-                planItems.add(PlanListItem.Header("Breakfast"))
-                planItems.add(PlanListItem.PlanItem(id = "${dayInMillis}-FOOD-$breakfastText", type = ItemType.FOOD, text = "$breakfastText ($breakfastCalories kcal, $breakfastProtein g protein)"))
-                planItems.add(PlanListItem.Header("Lunch"))
-                planItems.add(PlanListItem.PlanItem(id = "${dayInMillis}-FOOD-$lunchText", type = ItemType.FOOD, text = "$lunchText ($lunchCalories kcal, $lunchProtein g protein)"))
-                planItems.add(PlanListItem.Header("Dinner"))
-                planItems.add(PlanListItem.PlanItem(id = "${dayInMillis}-FOOD-$dinnerText", type = ItemType.FOOD, text = "$dinnerText ($dinnerCalories kcal, $dinnerProtein g protein)"))
+                breakfast?.let { (breakfastText, breakfastCalories, breakfastProtein) ->
+                    planItems.add(PlanListItem.Header("Breakfast"))
+                    planItems.add(PlanListItem.PlanItem(id = "${dayInMillis}-FOOD-$breakfastText", type = ItemType.FOOD, text = "$breakfastText ($breakfastCalories kcal, $breakfastProtein g protein)"))
+                }
+                lunch?.let { (lunchText, lunchCalories, lunchProtein) ->
+                    planItems.add(PlanListItem.Header("Lunch"))
+                    planItems.add(PlanListItem.PlanItem(id = "${dayInMillis}-FOOD-$lunchText", type = ItemType.FOOD, text = "$lunchText ($lunchCalories kcal, $lunchProtein g protein)"))
+                }
+                dinner?.let { (dinnerText, dinnerCalories, dinnerProtein) ->
+                    planItems.add(PlanListItem.Header("Dinner"))
+                    planItems.add(PlanListItem.PlanItem(id = "${dayInMillis}-FOOD-$dinnerText", type = ItemType.FOOD, text = "$dinnerText ($dinnerCalories kcal, $dinnerProtein g protein)"))
+                }
+
+                // Add exercises if present
+                if (planResult.exercises.isNotEmpty()) {
+                    planItems.add(PlanListItem.Header("Exercise"))
+                    planResult.exercises.split("\n").filter { it.isNotBlank() }.forEach { exerciseStr ->
+                        val exerciseText = exerciseStr.removePrefix("- ").trim()
+                        planItems.add(PlanListItem.PlanItem(
+                            id = "${dayInMillis}-EXERCISE-$exerciseText", 
+                            type = ItemType.EXERCISE, 
+                            text = exerciseText
+                        ))
+                    }
+                }
 
                 planByDate[dayInMillis] = planItems
             }
